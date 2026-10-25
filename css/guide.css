@@ -42,12 +42,14 @@
 .g-map-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 /* 交通路線（顏色同下面圖例） */
 .g-route{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
-.g-route-thsr{stroke:#E06A1B;stroke-width:3.5px}
-.g-route-tra{stroke:var(--ink);stroke-width:4px;stroke-linecap:butt}
-.g-route-tra-dash{stroke:#fff;stroke-width:2px;stroke-dasharray:6 6;stroke-linecap:butt}
-.g-route-red{stroke:#E2231A;stroke-width:3px}
-.g-route-orange{stroke:#F7A600;stroke-width:3px}
-.g-route-lrt{stroke:#8CC63F;stroke-width:3px}
+.g-route-thsr{stroke:#E06A1B;stroke-width:2.5px}
+.g-route-tra{stroke:var(--ink);stroke-width:3px;stroke-linecap:butt}
+.g-route-tra-dash{stroke:#fff;stroke-width:1.4px;stroke-dasharray:4 4;stroke-linecap:butt}
+.g-route-red{stroke:#E2231A;stroke-width:2px}
+.g-route-orange{stroke:#F7A600;stroke-width:2px}
+.g-route-lrt{stroke:#8CC63F;stroke-width:2px}
+/* 路線只當背景參考：整層淡一點，不和圓點搶 */
+.g-map-lines .g-route{opacity:.7}
 .g-sea{position:absolute;left:4%;top:24%;writing-mode:vertical-rl;letter-spacing:.5em;font-size:var(--fs-xs);color:#6C969C}
 .g-dot{display:inline-block;width:11px;height:11px;border:2px solid var(--ink);border-radius:50%;background:var(--sun);transition:transform .15s}
 /* 地圖上的點是按鈕：看起來小，但可點的範圍有 32px */
@@ -71,12 +73,9 @@
 .g-dot-thsr{border-color:#E06A1B}
 .g-dot-tra{border-color:var(--ink)}
 .g-dot-mrt{border-color:#E2231A}
-/* 說明小卡：固定放在左邊海上（寬度不超過海面），引線在 js 畫 */
-.g-pop{position:absolute;z-index:4;left:8px;width:36%;padding:7px 10px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);font-size:var(--fs-xs);line-height:1.6;pointer-events:none}
-.g-pop b{display:block;font-size:var(--fs-sm)}
-.g-pop div+div{margin-top:6px;padding-top:6px;border-top:1.5px dashed #C9B79C}
-.g-pop p{margin:2px 0 0;color:var(--ink-2)}
-.g-lead{stroke:var(--ink);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+/* 地名小標籤：貼在亮起的點旁邊（只寫名稱，說明看右邊行程／手機的行程卡）；點在右半邊就改貼左邊 */
+.g-label{position:absolute;z-index:4;transform:translate(14px,-50%);padding:1px 8px;background:#fff;border:2px solid var(--ink);border-radius:999px;box-shadow:2px 2px 0 var(--ink);font-size:var(--fs-xs);font-weight:var(--fw-medium);line-height:1.6;white-space:nowrap;pointer-events:none}
+.g-label.is-left{transform:translate(calc(-100% - 14px),-50%)}
 .g-map-wrap figcaption{margin-top:16px}
 .g-legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:var(--fs-sm)}
 .g-legend-lines{margin-top:6px;gap:2px 14px;font-size:var(--fs-xs);color:var(--ink-2)}
@@ -117,7 +116,6 @@
 .g-card-nav button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
 @media (max-width:720px){
   .g-plans{display:none}                 /* 清單收起來，改看行程卡 */
-  .g-pop,.g-lead{display:none}           /* 海上的說明小卡在手機上太擠，內容已經在行程卡裡 */
   .g-card{display:block;margin-top:16px}
   .g-pick.g-pick-m:not([hidden]){display:flex;justify-content:center;margin:0 0 14px}
   .g-map .g-dot:not(.is-hi){opacity:.55}  /* 目前這站以外的點變淡 */

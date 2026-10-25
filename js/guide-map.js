@@ -1,5 +1,5 @@
 /* ---------- 高雄小抄 地圖（assets/kaohsiung-map.svg 上面疊交通路線和地點） ----------
-   所有地點都只有圓點；選中的行程（預設第一站）或滑過的點才跳出名稱和說明。
+   地圖只畫選中那一天會去的點（婚宴永遠顯示）；選中的行程（預設第一站）或滑過的點旁邊貼名稱小標籤。
    ✏️ 要加減地點就改 SPOTS：
    id    和 index.html 行程 <li data-spot="…"> 對應（一行可以寫好幾個 id，空白隔開）：滑到行程，地圖上的點會亮、跳出說明
    kind  venue＝婚宴、sight＝景點、food＝美食、thsr／tra／mrt＝高鐵／台鐵／捷運站
@@ -82,51 +82,47 @@
   const steps = [...document.querySelectorAll('#guide [data-spot]')];
   const ids = el => el.dataset.spot ? el.dataset.spot.split(' ') : [];   // 「回旅宿」這類沒有地點的行程＝空
 
-  // 說明小卡（同一時間只有一張）：放在左邊的台灣海峽上，拉線到點，才不會擋到陸地
-  // 一行行程有好幾個點（例如高鐵左營站＋台鐵高雄車站）時，小卡裡列出每個點，每個點各拉一條線
-  const pop = document.createElement('div');
-  pop.className = 'g-pop'; pop.hidden = true; pop.setAttribute('role','status');
-  wrap.appendChild(pop);
-  let leads = [];
+  // 亮起的點旁邊貼一個只寫名稱的小標籤（說明文字在行程清單／手機行程卡裡，地圖上不重複）
+  let labels = [];
   let active = null;   // 目前選中的行程（<li>）；預設是該版本的第一站，點行程或地圖上的點會換
   const spot = id => SPOTS.find(o=>o.id===id);
-  function closePop(){ pop.hidden = true; leads.forEach(l=>l.remove()); leads = []; }
-  function openPop(list){
-    closePop();
-    pop.innerHTML = '';
+  function clearLabels(){ labels.forEach(l=>l.remove()); labels = []; }
+  function addLabels(list){
+    clearLabels();
     list.forEach(s=>{
-      const sec = document.createElement('div');
-      sec.innerHTML = '<b></b><p></p>';
-      sec.firstChild.textContent = s.name; sec.lastChild.textContent = s.note;
-      pop.appendChild(sec);
+      const l = document.createElement('span');
+      l.className = 'g-label' + (s.px[0] > 58 ? ' is-left' : '');
+      l.textContent = s.name;
+      l.style.left = s.px[0]+'%'; l.style.top = s.px[1]+'%';
+      l.setAttribute('aria-hidden','true');
+      wrap.appendChild(l); labels.push(l);
     });
-    pop.hidden = false;
-    const W = wrap.clientWidth, H = wrap.clientHeight, w = pop.offsetWidth, h = pop.offsetHeight;
-    const ys = list.map(s=>s.px[1]/100*H);
-    const mid = (Math.min(...ys)+Math.max(...ys))/2;
-    const top = Math.max(8, Math.min(H-h-8, mid-h/2));   // 盡量和點同高
-    pop.style.top = top+'px';
-    // 引線：小卡右緣 → 每個點（換回底圖單位畫）
-    const u = (px,py)=>[VIEW[0]+px/W*VIEW[2], VIEW[1]+py/H*VIEW[3]];
-    list.forEach((s,i)=>{
-      const x = s.px[0]/100*W, y = ys[i];
-      const ly = Math.max(top+14, Math.min(top+h-14, y));
-      const [x1,y1] = u(pop.offsetLeft+w, ly), [x2,y2] = u(x, y);
-      const l = document.createElementNS(NS,'line');
-      l.setAttribute('class','g-lead');
-      l.setAttribute('x1',x1); l.setAttribute('y1',y1); l.setAttribute('x2',x2); l.setAttribute('y2',y2);
-      lines.appendChild(l); leads.push(l);
+    // 兩個點很近（例如橋頭的台鐵站和捷運站）標籤會疊在一起：同一邊的標籤由上往下排，太近就往下推
+    ['', ' is-left'].forEach(side=>{
+      const same = labels.filter(l=>(l.classList.contains('is-left') ? ' is-left' : '')===side)
+        .map(l=>({l, y:l.offsetTop})).sort((p,q)=>p.y-q.y);
+      let prev = -Infinity;
+      same.forEach(o=>{
+        const h = o.l.offsetHeight, y = Math.max(o.y, prev + h + 4, h/2 + 4);
+        if(y !== o.y) o.l.style.top = y+'px';
+        prev = y;
+      });
     });
   }
-  // 亮起某幾個點、跳出它們的說明（滑過時用；滑開就回到選中的那一站）
-  function light(list){
+  // 地圖只畫「這一天」會去的點（婚宴永遠留著當參考）：day＝行程所在的 .g-col
+  function scope(day){
+    const here = new Set(day ? [...day.querySelectorAll('[data-spot]')].filter(x=>!x.closest('[hidden]')).flatMap(ids) : []);
+    SPOTS.forEach(s=>{ s.dot.style.display = s.planOn && (s.kind==='venue' || here.has(s.id)) ? '' : 'none'; });
+  }
+  // 亮起某幾個點、貼上名稱（滑過時用；滑開就回到選中的那一站）；step＝這幾個點屬於哪一行行程，用來決定顯示哪一天
+  function light(list, step){
+    scope((step || active) && (step || active).closest('.g-col'));
     SPOTS.forEach(s=>s.dot.classList.toggle('is-hi', list.includes(s.id)));
-    const on = list.map(spot).filter(s=>s && s.dot.style.display!=='none');
-    if(on.length) openPop(on); else closePop();
+    addLabels(list.map(spot).filter(s=>s && s.dot.style.display!=='none'));
   }
   function restore(){
     steps.forEach(x=>{ x.classList.remove('is-hi'); x.classList.toggle('is-active', x===active); });
-    light(active ? ids(active) : []);
+    light(active ? ids(active) : [], active);
   }
   function activate(x){ active = x; restore(); renderCard(); }
 
@@ -153,7 +149,7 @@
   // 行程：滑過預覽，點一下（或 Enter）選中
   steps.forEach(x=>{
     x.tabIndex = 0;
-    x.addEventListener('mouseenter',()=>{ x.classList.add('is-hi'); light(ids(x)); });
+    x.addEventListener('mouseenter',()=>{ x.classList.add('is-hi'); light(ids(x), x); });
     x.addEventListener('mouseleave',restore);
     x.addEventListener('click',()=>activate(x));
     x.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(x); } });
@@ -247,8 +243,7 @@
   function show(panelId){
     const plan = document.getElementById('g-solo').hidden ? 'fam' : 'solo';
     SPOTS.forEach(s=>{
-      const on = (s.plan==='both'||s.plan===plan) && (plan!=='fam' || !s.route || !document.getElementById(s.route).hidden);
-      s.dot.style.display = on?'':'none';
+      s.planOn = (s.plan==='both'||s.plan===plan) && (plan!=='fam' || !s.route || !document.getElementById(s.route).hidden);
     });
     number();
     syncPick();
@@ -285,13 +280,12 @@
   show('g-fam');
   // 跟著「家庭版／個人版」和家庭版第 1 日的路線切換
   document.addEventListener('guide:tab', e=>show(e.detail));
-  // 版面變了（手機轉向、視窗縮放）說明小卡要重新對位
   // 字型載入完字寬會變，卡片高度再算一次
   if(document.fonts) document.fonts.ready.then(fitCard);
   // 手機上卡片高度也要重算（寬度變了，字換行的地方就不同）
   let lastW = 0;
   new ResizeObserver(()=>{
-    if(!pop.hidden) restore();
+    if(labels.length) restore();   // 標籤錯開是用像素算的，版面變了要重排
     if(wrap.clientWidth !== lastW){ lastW = wrap.clientWidth; fitCard(); }
   }).observe(wrap);
 })();
