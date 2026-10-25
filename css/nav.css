@@ -1,0 +1,9 @@
+/* 右上角導覽列 */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px clamp(16px,4vw,40px);pointer-events:none}
+.nav>*{pointer-events:auto}
+.pill{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;text-decoration:none;font-size:var(--fs-sm);font-weight:var(--fw-medium);background:var(--paper);border:var(--line) solid var(--ink);border-radius:999px;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.brand{font-size:var(--fs-body);letter-spacing:.04em}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.nav .pill.cta{background:var(--sun)}
+@media (max-width:640px){.nav ul li:not(:has(.cta)){display:none}}  /* 手機只留橘色的回信按鈕 */

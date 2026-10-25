@@ -1,0 +1,123 @@
+/* 首屏：多層視差場景（天空雲 → 遠山 → 山丘 → 拱門 → 鳥 → 地面 → 新人 → 前景灌木） */
+/* ============ HERO：Firewatch 式分層視差 ============ */
+.hero{position:relative;overflow:hidden;background:var(--pink);
+  --u:min(calc(100vw / 1600), calc(100svh / 1000)); --sx:1; --vo:0; --tw:740;
+  height:calc(100svh + 640 * var(--u))}
+/* 電腦版對齊（前景灌木不動）：場景各層的畫布中心、拱門洞口中心、貓狗兩人的中點，全部對到畫面中線。
+   --cx 山／地面畫布中心；--ax 拱門洞口中心（量自新版拱門 SVG）；--cl 新人的左緣（貓狗中點在圖寬 .547 處） */
+@media (min-aspect-ratio:4/5){ .hero{--cx:.5; --ax:.5003; --cl:32.4%} }
+@media (max-aspect-ratio:4/5){ .hero{--u:min(calc(100vw / 720), calc(100svh / 1250)); --sx:.6; --vo:120; --tw:660; --dy:7svh; --hs:.5} }
+.layer{position:absolute;left:0;right:0;top:0;height:100svh;will-change:transform;pointer-events:none}
+.layer img{width:100%;height:auto}
+
+.hero{--fw:max(127.5svh, min(100vw, 150svh));--fh:calc(var(--fw) * 0.78459)}
+.frame{position:absolute;height:var(--fh);top:calc(min(0px, calc(100svh - var(--fh) * .86)) + var(--dy,0px))}
+.frame{left:calc(50% - var(--fw) / 2);width:var(--fw)}
+
+.layer .fp{position:absolute;height:auto}
+/* 桌機滑鼠跟隨：每層依 data-m 位移，用獨立的 translate 屬性，不跟捲動的 transform 打架 */
+.layer[data-m]{translate:calc(var(--mx,0) * var(--m) * 1px) calc(var(--my,0) * var(--m) * .35px)}
+/* iPhone 等觸控裝置的捲動視差：由瀏覽器跟著捲動直接算（scroll-driven animation），不經過 JS，才不會慢半拍而抖。
+   每層往下位移 = 捲動量 × --f（js/hero.js 依 data-f 設定），算到首屏高度再多 200px 為止，跟電腦版 JS 的範圍一樣。
+   瀏覽器不支援時，js/hero.js 照舊用 JS 做視差 */
+@keyframes heroParallax{from{translate:0 0}to{translate:0 calc((100svh + 640 * var(--u) + 200px) * var(--f,0))}}
+@supports (animation-timeline: scroll()){
+  @media (hover:none) and (prefers-reduced-motion:no-preference){
+    .hero .layer{animation:heroParallax linear both;animation-timeline:scroll(root);animation-range:0px calc(100svh + 640 * var(--u) + 200px)}
+    /* 首屏滑出時會暫停 .hero 裡所有動畫，視差這個不能停，不然滑回來時各層位置是舊的 */
+    html.hero-off .hero .layer{animation-play-state:running!important}
+  }
+}
+/* 場景四層：共用 1920² 畫布；寬 --sw，拱門中心(畫布 51.4%)對齊 frame 中線，地平線(畫布 43.23%)落在 fh 62% */
+.hero{--sw:max(calc(var(--fw) * 1.2), calc(100vw + 100px))}  /* 滑鼠視差最多讓場景圖左右各位移約 21px（data-m 最大 1.7）；前景灌木圖本身又偏左 14px，所以多留 50px */
+.layer .sc{left:calc(50% - var(--sw) * var(--cx,.514));top:calc(var(--fh) * .62 - var(--sw) * .4323);width:var(--sw)}
+/* 遠山、山丘：比拱門／地面再往上一點；手機（直式）另外整層縮小（--hs），畫面才裝得下山丘兩端的樹。
+   寬度不會小於螢幕寬的 105%，避免兩側露白；地平線高度與其他層對齊，縮小後山頂會變低，所以再依縮小量補抬（最後那項），讓山頂高度跟沒縮小時一樣 */
+.layer .sc-far,.layer .sc-hills{--w:max(calc(var(--sw) * var(--hs,1)), 105vw);width:var(--w);left:calc(50% - var(--w) * var(--cx,.514))}
+/* 手機（直式）：花圈（拱門）再往右 3% 螢幕寬；桌機不動 */
+.layer .sc-arch{left:calc(50% - var(--sw) * var(--ax,.514))}
+@media (max-aspect-ratio:4/5){ .layer .sc-arch{left:calc(50% - var(--sw) * .514 + 3vw)} }
+/* 窄長手機（平板直放不用）：拱門縮小、鳥和布條跟著拱門頂往下、鳥小一點，讓左後方山丘上的建物露出來（被拱門或鵲鴝壓到一點沒關係）。
+   拱門以底部中央（畫布 50%, 46.25%）為準縮成 .85；拱門頂（畫布 20%）因此下降 (1-.85)*(.4625-.2) ≈ .0394 個 --sw */
+@media (max-aspect-ratio:2/3){
+  .layer .sc-arch{transform:scale(.85);transform-origin:50% 46.25%}
+  .layer .hero-birds{margin-top:calc(var(--sw) * .0394);width:min(29.81%, 60vw)}
+  /* 建物在山丘圖寬的 12.3%～20.7%：把山丘往右挪，讓建物左緣落在畫面左邊 2px（原本 left 是 50vw - .514w） */
+  .layer .sc-hills{margin-left:calc(2px + var(--w) * .391 - 50vw)}
+  /* 標題原本貼著導覽列、離鳥很遠：往下挪，跟鳥和拱門連成一組 */
+  .layer .hero-title{margin-top:9svh}
+}
+.layer .sc-far{top:calc(var(--fh) * .62 - var(--w) * .4323 - var(--fh) * .12 - (var(--sw) - var(--w)) * .12)}
+.layer .sc-hills{top:calc(var(--fh) * .62 - var(--w) * .4323 - var(--fh) * .09 - (var(--sw) - var(--w)) * .12)}
+/* 遠山圖裡有雲朵字樣 wedding（畫布 y 376～552）。比例介於 2:3 和 4:5 的直式螢幕（大手機、平板直放），
+   拱門沒縮小、會擋到字樣下緣，所以把遠山整層往上提 5.5% 圖寬；更窄長的手機拱門已縮小，不用提 */
+@media (min-aspect-ratio:2/3) and (max-aspect-ratio:4/5){ .layer .sc-far{margin-top:calc(var(--w) * -.055)} }
+/* 遠山換成內嵌 SVG 後（js/hero-far.js）：寬度照 .sc-far，高度依 viewBox 自動算 */
+svg.sc-far{display:block;height:auto}
+/* 捲動中暫停圖裡的飄動（js/hero-far.js 加 class），手機捲動才不會抖 */
+svg.sc-far.hf-scrolling *{animation-play-state:paused!important}
+/* 手機（直式）：wedding 字樣整組放大、上移；兩側大雲放大並往中間靠，再依螢幕調：左雲往左 14% 螢幕寬、順時針轉 10 度；右雲往下 5% 螢幕高、逆時針轉 5 度。
+   右雲以底角為中心轉會讓右上角被切平的邊往內跑、在窄手機露出來，所以多加 (58, -3) 的位移（角度改了要重算），等於改以右上角為中心轉（--upx 由 js/hero-far.js 算，把螢幕 px 換成畫布單位）。
+   數值是遠山畫布（1920×1920）的座標單位；字樣以自己的中心放大，雲以貼著畫布邊的底角為中心放大。
+   雲往內移的量受最窄的手機（320～360 寬）限制：再多，雲被畫布切平的外側邊會在飄動時露出來（右雲本身會往左飄 52） */
+@media (max-aspect-ratio:4/5){
+  .sc-far .hf-word{transform-box:view-box;transform-origin:968px 464px;scale:1.18;translate:20px -300px}
+  .sc-far .hf-c1{transform-box:view-box;transform-origin:-30px 790px;scale:1.45;rotate:10deg;translate:calc(240px - 14vw * var(--upx,3)) 0}
+  .sc-far .hf-c3{transform-box:view-box;transform-origin:1965px 840px;scale:1.45;rotate:-5deg;translate:calc(-170px + 58px) calc(5svh * var(--upx,3) - 3px)}
+  /* 中間兩朵（山稜後）手機版不顯示 */
+  .sc-far .hf-c2,.sc-far .hf-c4{display:none}
+}
+/* 2:3～4:5（大手機、平板直放）遠山圖幾乎貼齊螢幕寬，雲往內移會露出被畫布切平的外側邊：左雲只移一點；
+   右雲本身會往左飄 52，反而要先往外推，飄到最左時右緣才不會露出來 */
+@media (min-aspect-ratio:2/3) and (max-aspect-ratio:4/5){
+  .sc-far .hf-c1{translate:calc(30px - 14vw * var(--upx,3)) 0}
+  .sc-far .hf-c3{translate:calc(60px + 58px) calc(5svh * var(--upx,3) - 3px)}
+}
+.fp svg{display:block;width:100%;height:auto}
+
+/* 草叢層：上緣是灌木邊，下面一路實心延伸 */
+
+.hero .on{position:absolute;left:calc(50% + var(--x) * var(--sx) * var(--u) - var(--w) * var(--u) / 2);top:calc((200 + var(--k)) * var(--u));width:calc(var(--w) * var(--u));transform:translateY(-100%)}
+
+/* 首屏完全滑出視窗後，暫停首屏內所有動畫（鳥、新人、雲、標題），省 CPU／電量；滑回來自動繼續 */
+html.hero-off .hero,html.hero-off .hero *{animation-play-state:paused!important}
+/* 背景三朵雲各自獨立、不調透明度：每朵都由右邊畫面外飄到左邊畫面外（無縫循環，不需要淡入淡出）。
+   用 ease-in-out：進出畫面兩側時很慢、經過中間才稍快，所以大部分時間雲都在頁面兩側；三朵速度、高度、起點都不同 */
+.layer .bgc{position:absolute;display:block;height:auto;left:105vw;will-change:transform;animation:bgcAcross var(--t) cubic-bezier(.45,.05,.55,.95) infinite}
+.layer .bgc-a{top:21svh;width:max(10vw,84px);--t:200s;animation-delay:-124s}
+.layer .bgc-b{top:9svh;width:max(6.4vw,56px);--t:140s;animation-delay:-42s}
+.layer .bgc-c{top:29svh;width:max(10.5vw,88px);--t:260s;animation-delay:-47s}
+@keyframes bgcAcross{from{transform:translateX(0)}to{transform:translateX(-125vw)}}
+/* 暫時隱藏：雲改由 h-far.svg 內的雲飄動。要恢復就刪掉這行 */
+.layer .bgc{display:none}
+/* 暫時隱藏標題圖 title.svg。要恢復就刪掉這行 */
+.layer .hero-title{display:none}
+/* wedding 字樣：像雲一樣緩慢上下（帶一點左右）飄；用獨立的 translate 屬性，不蓋掉原本的 translateX(-50%) 置中 */
+.title-float{animation:titleDrift 7s ease-in-out infinite alternate}
+@keyframes titleDrift{from{translate:calc(var(--fh) * -.004) calc(var(--fh) * -.009)}to{translate:calc(var(--fh) * .004) calc(var(--fh) * .009)}}
+.bob{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.cue{position:absolute;left:50%;top:calc(100svh - 64px);transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;font-size:var(--fs-xs);letter-spacing:.1em;color:var(--paper);text-shadow:0 0px 0 var(--ink)}
+.cue svg{animation:bob 1.6s ease-in-out infinite}
+
+/* —— 各層的位置（原本寫在 HTML 的 style=""）—— */
+.layer .hero-title{left:50%;top:calc(max(58px, 2.545%) - var(--dy,0px) + 4svh);width:min(45.65%, 94vw);transform:translateX(-50%)}
+.layer .hero-birds{left:50%;top:23.02%;width:min(29.81%, 81.4vw);transform:translateX(-50%);display:flow-root}
+/* 鳥與新人的 SVG 為了讓擺動的翅膀、衣角不被裁掉，viewBox 四周各多留了 30 單位，所以圖比原尺寸大一圈、再用負邊界挪回原位 */
+.layer .bird-img{width:111.489%;margin:-5.745% 0 -5.745% -5.745%}
+.layer .hero-ground-fill{left:-100vw;right:-100vw;top:calc(var(--fh) * .62 + var(--sw) * .5677 - 2px);height:1400px;background:#269E6C}
+.layer .couple-img{left:calc(var(--cl,33.95%) - 1.7916%);top:calc(41.27% - var(--fw) * 0.017916);width:35.683%}
+/* 新人換成內嵌 SVG 後（js/couple.js）：只有畫到貓、狗身上的地方能點，四周透明處照樣穿過去 */
+.layer svg.couple-img,.layer svg.sc{display:block;height:auto}
+.layer svg.couple-img :is(.swc,.swd){pointer-events:visiblePainted;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.layer .hero-near{left:calc(50% - var(--sw) * .514);top:calc(78svh - var(--sw) * .502);width:var(--sw)}
+.layer .hero-near-fill{left:-80px;right:-80px;top:calc(78svh + var(--sw) * .498 - 2px);height:2400px;background:#1F6F57}
+/* 前景灌木換成內嵌 SVG 後（js/flowers.js），高度照 viewBox 比例 */
+.layer svg.hero-near{display:block;height:auto}
+/* 右邊灌木（後層）捲得比左邊慢一點點（data-f -.11 vs -.14）；首屏捲完（約 640 * --u）時會落後 .03*640 ≈ 19u，先往上挪回來，捲到底時兩層對齊原圖 */
+.layer.near-back{margin-top:calc(var(--u) * -19)}
+/* 直立畫面（手機、平板直放）灌木圖兩側會被裁掉，花都在畫面外：左邊灌木往右挪、右邊往左挪，讓兩邊的花露出來 */
+@media (max-aspect-ratio:4/5){
+  .layer.near:not(.near-back) .hero-near{margin-left:calc(var(--sw) * .1)}
+  .layer.near-back .hero-near{margin-left:calc(var(--sw) * -.08)}
+}

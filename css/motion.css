@@ -1,0 +1,8 @@
+/* 動態偏好：使用者系統設定「減少動態效果」時，關掉動畫（要放在所有樣式最後面才蓋得過去） */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bob,.cue svg,.title-float,.bgc,.cat .cat-tail,.cat .cat-face{animation:none}
+  .layer .bgc-a{left:12vw}.layer .bgc-b{left:82vw}.layer .bgc-c{left:76vw}
+  .reveal{opacity:1;transform:none;transition:none}
+  .sheet,.env-flap,.seal,.carrier,.carrier img,.env-letter,.letter-stage,.desk{transition:none!important;animation:none!important}
+}

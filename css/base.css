@@ -1,0 +1,31 @@
+/* 設計變數、重置、全站共用元件（按鈕、淡入） */
+:root{
+  --paper:#FBF1E3; --ink:#231A16; --ink-2:#4A443B;
+  --pink:#EC92AB;
+  --rose:#B8304A; --sun:#F2B233; --line:2.5px;
+  /* 字級：全站只用這五階，層次再靠字重拉開（同一階的標題用粗、小標用中） */
+  --fs-h1:clamp(28px,4.6vw,44px);   /* 大標：區塊標題、婚禮日期、寄出囉 */
+  --fs-h2:20px;                       /* 小標：回函卡抬頭與每段標題、小抄第幾日、場地名稱、大選項 */
+  --fs-body:17px;                   /* 內文、引言、選項、輸入框 */
+  --fs-sm:15px;                     /* 說明、欄位名稱、錯誤訊息、導覽列、按鈕 */
+  --fs-xs:13px;                     /* 括號補充、標籤、頁碼 */
+  /* 字重：標題用粗、小標／可點的東西／重點用中、內文與 15px 以下的小字一律一般 */
+  --fw-bold:700; --fw-medium:500; --fw-regular:400;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--pink);transition:background-color .35s ease}
+body{margin:0;background:var(--pink);transition:background-color .35s ease;color:var(--ink);font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;user-select:none;-webkit-user-drag:none}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+h1,h2,h3,h4{font-weight:var(--fw-bold)}
+legend,b,strong{font-weight:var(--fw-medium)}
+small{font-weight:var(--fw-regular)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border:var(--line) solid var(--ink);border-radius:999px;background:var(--sun);color:var(--ink);text-decoration:none;font-size:var(--fs-sm);font-weight:var(--fw-medium);box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+[hidden]{display:none!important}
+@media (max-width:720px){.hide-sm{display:none}}

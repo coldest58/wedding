@@ -1,0 +1,47 @@
+/* 草原區：邀請文字、日期地點（樹叢外框）、石虎 */
+.intro{position:relative;z-index:2;text-align:center;color:var(--paper);padding:0 4px;margin-top:-40px}
+
+/* 邀請文字：桌機 20px；手機最長那行（19 個字）要塞得進一行，所以跟著螢幕寬縮小，不讓「名，」「屬。」單獨掉到下一行 */
+.intro p{font-size:clamp(16px,4.5vw,20px);max-width:30em;margin:0 auto;opacity:.92}
+.intro p + p{margin-top:1.4em}
+
+/* 草原 */
+.meadow{position:relative;background:#1F6F57;padding:40px 16px clamp(80px, 12vw, 140px);overflow:hidden;color:var(--paper)}
+
+.gap{height:clamp(140px,18vw,220px)}
+
+/* 日期與地點：樹叢圖當外框，中間綠色空白處放資訊 */
+.bushcard{position:relative;z-index:2;width:clamp(720px,100vw,1200px);margin:0;left:50%;transform:translateX(-50%)}
+.bushcard.reveal{transform:translateX(-50%) translateY(24px)}
+.bushcard.reveal.in{transform:translateX(-50%)}
+.bushcard .bc-art{display:block;width:100%;height:auto;
+  /* 圖的外圈顏色跟草地幾乎一樣，四邊淡出就看不到方框的接縫 */
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 90%,transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 90%,transparent);
+  mask-composite:intersect}
+.bc-in{position:absolute;left:27%;right:27%;top:13%;bottom:20%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--ink)}
+.bc-in p{margin:0}
+.bc-date{font-weight:var(--fw-bold);font-size:var(--fs-h1);line-height:1.1}
+.bc-date small{font-size:var(--fs-sm);margin-left:.2em;letter-spacing:.1em}
+.bc-name{font-weight:var(--fw-medium);margin-top:clamp(8px,1.8vw,18px)!important;font-size:var(--fs-h2);line-height:1.3}
+.bc-addr{font-size:var(--fs-sm);line-height:1.35;margin-top:4px!important}
+.bc-time{display:flex;gap:clamp(14px,3vw,30px);margin-top:clamp(8px,1.8vw,16px)!important;font-size:var(--fs-body)}
+.bc-time b{font-weight:var(--fw-medium);font-size:var(--fs-h2)}
+.bc-in .btn{margin-top:clamp(10px,2vw,18px);min-height:44px;padding:0 18px;font-size:var(--fs-sm)}
+/* 右下角灌木裡的石虎：頭上下探、尾巴搖。四張圖層疊（後灌木 → 尾巴 → 頭 → 前灌木），
+   頭和尾巴躲在前灌木後面，所以動的時候不會露出切邊 */
+.cat{position:absolute;z-index:3;width:clamp(120px,22%,270px);aspect-ratio:700/594;
+  right:calc((100% - 100vw) / 2 - 2%);bottom:-24%;pointer-events:none} /* 貼齊視窗右緣，切掉一點 */
+.cat img{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:720px){.cat{bottom:-29%}}
+.cat .cat-tail{transform-origin:58.6% 67.3%;animation:catTail 1.5s ease-in-out infinite alternate}
+.cat .cat-face{animation:catPeek 5.5s ease-in-out infinite}
+@keyframes catTail{from{transform:rotate(-8deg)}to{transform:rotate(9deg)}}
+@keyframes catPeek{0%,12%{transform:translateY(0)}34%,58%{transform:translateY(-2.2%)}82%{transform:translateY(.9%)}100%{transform:translateY(0)}}
+/* 樹叢外框上的花（js/bush-frame.js 包的兩層）：外層平常輕輕左右晃，內層給點擊／游標的動畫 */
+.bushcard .bf-idle{animation:bfIdle 4s ease-in-out infinite alternate}
+@keyframes bfIdle{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.bushcard .bf-tap{cursor:pointer}
+.bushcard .bf-leaf{animation:bfLeaf 3s ease-in-out infinite alternate}
+@keyframes bfLeaf{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}

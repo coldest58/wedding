@@ -1,0 +1,173 @@
+/* 回函：分步表單、信紙、信封與寄出動畫 */
+/* 邀請函上方的照片牆：拍立得錯落插在草叢裡（米白相紙、墨線、硬陰影，跟信紙同一套畫法）。
+   一律直向一欄：第 1 張偏左、第 2 張偏右、第 3 張偏左⋯⋯上下留一點間距，不蓋到上一張的圖說。
+   傾斜放在 .snap-in（用 --r），避免跟 .reveal 的 transform 打架 */
+.album{position:relative;z-index:2;display:flex;flex-direction:column;max-width:720px;margin:0 auto clamp(40px,7vw,72px)}
+.snap{position:relative;width:min(420px,78%);margin:0}
+.snap:nth-child(odd){align-self:flex-start;margin-left:4%}
+.snap:nth-child(even){align-self:flex-end;margin-right:4%}
+.snap + .snap{margin-top:clamp(36px,7vw,72px)}
+.snap-in{position:relative;z-index:1;background:#FFFBF0;border:3px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 var(--ink);
+  padding:10px 10px 0;transform:rotate(var(--r,0deg));transition:transform .4s cubic-bezier(.3,.7,.3,1)}
+.snap:hover .snap-in{transform:rotate(calc(var(--r,0deg) / 3)) translateY(-6px)}
+.snap-in img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:var(--pos,50% 50%);border:2.5px solid var(--ink);border-radius:2px}
+.snap figcaption{color:var(--ink);text-align:center;font-size:var(--fs-sm);line-height:1.5;padding:10px 8% 14px;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}
+/* keep-all：中文只在標點後、或 HTML 裡標 <wbr> 的地方換行，不會把「十字路口」拆開；
+   圖說長句記得在詞跟詞之間加 <wbr>。都放不下才在字中間斷（anywhere）。balance：每行差不多長 */
+/* 草叢：後面一叢從側邊探出來、前面一叢蓋住相框下角，看起來像照片插在草裡；偶數張左右對調 */
+.snap-bush{position:absolute;pointer-events:none;height:auto}
+.snap-bush.back{z-index:0;width:46%;right:-20%;bottom:16%}
+.snap-bush.front{z-index:2;width:36%;left:-14%;bottom:-9%}
+.snap:nth-child(even) .snap-bush{transform:scaleX(-1)}
+.snap:nth-child(even) .snap-bush.back{right:auto;left:-20%}
+.snap:nth-child(even) .snap-bush.front{left:auto;right:-14%}
+@media (prefers-reduced-motion:reduce){.snap-in{transition:none}}
+
+/* 標題區 */
+.rsvp-wrap .head{text-align:center;max-width:640px;margin:0 auto 36px;position:relative;z-index:2}
+.rsvp-wrap h2{font-weight:var(--fw-bold);font-size:var(--fs-h1);line-height:1.2;margin:6px 0 10px}
+.rsvp-wrap p{font-size:var(--fs-body);opacity:.92}
+
+.desk{position:relative;max-width:720px;margin:0 auto;z-index:2;scroll-margin-top:90px} /* 導覽列「回函」直接停在回函，不停在照片牆 */
+.sheets{position:relative;display:grid;isolation:isolate;scroll-margin-top:80px}
+.sheets::before,.sheets::after{content:"";position:absolute;inset:0;z-index:-1;background:#F3EAD2;border:3px solid var(--ink);border-radius:6px}
+.sheets::before{transform:rotate(-1.6deg) translate(-4px,3px)}
+.sheets::after{transform:rotate(1.3deg) translate(5px,4px)}
+.sheet{grid-area:1/1;display:flex;flex-direction:column;opacity:0;visibility:hidden;pointer-events:none;transform:translateX(70px) rotate(2.2deg);
+  transition:transform .5s cubic-bezier(.3,.7,.3,1),opacity .35s ease,visibility 0s linear .5s}
+.sheet.is-past{transform:translateX(-70px) rotate(-2.2deg)}
+.sheet.is-active{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s;z-index:1}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+.sheet{position:relative;color:var(--ink);background:#FFFBF0;border:3px solid var(--ink);border-radius:6px;box-shadow:7px 7px 0 var(--ink);
+  padding:clamp(24px,5vw,48px) clamp(18px,5vw,48px) clamp(22px,4vw,36px) clamp(34px,8vw,72px);
+  background-image:linear-gradient(to right,transparent clamp(24px,6vw,54px),rgba(184,48,74,.45) clamp(24px,6vw,54px),rgba(184,48,74,.45) calc(clamp(24px,6vw,54px) + 2px),transparent calc(clamp(24px,6vw,54px) + 2px)),repeating-linear-gradient(to bottom,transparent 0 35px,rgba(74,120,181,.16) 35px 36px);
+  background-position:0 0,0 14px}
+.rsvp-wrap .lt-to{opacity:1;font-weight:var(--fw-medium);margin:0 0 22px;font-size:var(--fs-h2);line-height:1.4}
+.rsvp-wrap .lt-to small{margin-left:.6em;font-size:var(--fs-sm);color:var(--ink-2)}
+/* 第 1 張的大標：回函卡的抬頭，置中 */
+.lt-title{font-weight:var(--fw-bold);text-align:center;font-size:var(--fs-h2);line-height:1.35;margin:0 0 4px;text-wrap:balance}
+.rsvp-wrap .lt-sub{opacity:1;text-align:center;margin:0 0 24px;font-size:var(--fs-sm);color:var(--ink-2)}
+.lt-sec{margin:0 0 22px}
+.lt-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+@media (max-width:560px){.lt-row{grid-template-columns:1fr}}
+.step{border:0;margin:0;padding:0;min-width:0}
+.step legend{font-size:var(--fs-h2);line-height:1.3;margin:0 0 18px;padding:0}
+.fld{display:block;margin:0 0 16px}
+.fld>span{display:block;font-size:var(--fs-sm);color:var(--ink-2);margin-bottom:6px}
+.fld small{font-size:var(--fs-xs)}
+.fld input,.fld textarea{width:100%;font:inherit;font-size:var(--fs-body);color:var(--ink);background:rgba(255,255,255,.55);border:0;border-bottom:2.5px solid var(--ink);border-radius:4px 4px 0 0;padding:10px 12px;min-height:48px}
+.fld textarea{resize:vertical;line-height:1.6}
+.fld input:focus-visible,.fld textarea:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.fld input[aria-invalid="true"]{border-color:var(--rose);background:#FFF2F5}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips.col{flex-direction:column;align-items:stretch}
+.chips label{position:relative;cursor:pointer}
+.chips input,.big-choice input{position:absolute;opacity:0;width:1px;height:1px}
+.chips b{display:flex;align-items:center;min-height:48px;padding:0 18px;font-weight:var(--fw-medium);font-size:var(--fs-body);background:#fff;border:2.5px solid var(--ink);border-radius:999px;box-shadow:3px 3px 0 var(--ink);transition:background .15s,transform .15s}
+.chips input:checked+b{background:var(--sun);transform:translate(-1px,-1px)}
+.chips input:focus-visible+b,.big-choice input:focus-visible+span{outline:3px solid var(--rose);outline-offset:3px}
+.big-choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.big-choice label{cursor:pointer;position:relative}
+.big-choice span{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:18px 12px;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,background .15s}
+.big-choice img{height:96px;width:auto;object-fit:contain;margin-bottom:6px}
+.big-choice b{font-weight:var(--fw-medium);font-size:var(--fs-h2)}
+.big-choice small{font-size:var(--fs-sm);color:var(--ink-2)}
+.big-choice input:checked+span{background:#FFE7A8;transform:translate(-2px,-2px) rotate(-1deg);box-shadow:6px 6px 0 var(--ink)}
+.stepper{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px dashed #E1D2BA}
+.stepper .lbl{flex:1;font-size:var(--fs-body)}
+.stepper .lbl small{display:block;font-size:var(--fs-xs);color:var(--ink-2)}
+.stepper button{width:48px;height:48px;border-radius:50%;border:2.5px solid var(--ink);background:#fff;font:inherit;font-size:var(--fs-h2);line-height:1;cursor:pointer;box-shadow:3px 3px 0 var(--ink);color:var(--ink)}
+.stepper button:disabled{opacity:.35;cursor:default;box-shadow:none}
+.stepper output{font-weight:var(--fw-medium);min-width:2ch;text-align:center;font-size:var(--fs-h2)}
+.err{min-height:1.6em;margin:6px 0 0;color:var(--rose);font-size:var(--fs-sm)}
+.nav-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px}
+.nav-row .btn:only-child,.nav-row .next{margin-left:auto}
+.sheet .nav-row{margin-top:auto;padding-top:10px}
+.lt-page{position:absolute;left:50%;transform:translateX(-50%);bottom:24px;font-size:var(--fs-xs);color:var(--ink-2);letter-spacing:.15em;pointer-events:none}
+.btn.ghost{background:#fff}
+button.btn{font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-medium);cursor:pointer;color:var(--ink)}
+/* 已寄過的提示：用紙膠帶貼在信紙上方的便條 */
+.sent-before{position:relative;color:var(--ink);background:#FFF6D2;border:2.5px solid var(--ink);border-radius:3px;box-shadow:5px 5px 0 var(--ink);
+  padding:26px 20px 18px;margin:14px 6px 30px;transform:rotate(-1.2deg);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,rgba(74,120,181,.16) 31px 32px);background-position:0 12px}
+.sent-before::before{content:"";position:absolute;top:-14px;left:50%;width:104px;height:26px;margin-left:-52px;background:rgba(249,217,225,.88);
+  border-left:2px dashed rgba(184,48,74,.35);border-right:2px dashed rgba(184,48,74,.35);transform:rotate(3deg)}
+.rsvp-wrap .sent-before p{margin:0;opacity:1;font-size:var(--fs-body)}
+.sent-actions{display:flex;flex-wrap:wrap;gap:10px}
+/* 更正上一封時，表單上方的提示 */
+.rsvp-wrap .correct-note{margin:0 0 18px;padding:10px 16px;background:#FFF4D6;color:var(--ink);border:2.5px dashed var(--ink);border-radius:12px;font-size:var(--fs-sm);opacity:1;scroll-margin-top:90px}
+
+/* 回函：直接寫在第 4 張紙上 */
+.sheet-letter{display:none;text-align:left}
+.sheet.is-letter>:not(.sheet-letter){display:none}
+.sheet.is-letter .sheet-letter{display:block}
+.sheet.is-sending #letterActions{visibility:hidden}
+.rsvp-wrap .sheet-letter .to{font-weight:var(--fw-bold);text-align:center;margin:0 0 20px;font-size:var(--fs-h2);line-height:1.35;text-wrap:balance}
+.rsvp-wrap .sheet-letter .body p{opacity:1;margin:0 0 6px;font-size:var(--fs-body);line-height:1.8;display:flex;gap:12px}
+.sheet-letter .body .k{flex:none;width:6em;color:var(--ink-2);font-size:var(--fs-sm);padding-top:.1em}
+.sheet-letter .hl{background:linear-gradient(transparent 60%, #FFE08A 60%);padding:0 2px}
+.rsvp-wrap .sheet-letter .from{opacity:1;text-align:right;margin:14px 0 0;font-size:var(--fs-body)}
+.sheet-letter .from small{display:block;font-size:var(--fs-xs);color:var(--ink-2)}
+.sheet-letter .nav-row{margin-top:22px}
+
+/* 對折：兩片紙，正面是信、背面是空白紙 */
+.sheets.is-folding{opacity:0}
+.fold-wrap{position:absolute;z-index:5;perspective:1400px;transform-style:preserve-3d;transform-origin:0 0;pointer-events:none}
+.fold-panel{position:absolute;left:0;width:100%;transform-style:preserve-3d}
+.fold-face,.fold-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fold-face{overflow:hidden}
+.fold-shade{position:absolute;inset:0;background:#231A16;opacity:0}
+.fold-back,.env-letter{background:#FFFBF0;border:3px solid var(--ink);border-radius:4px;box-sizing:border-box}
+.fold-back{transform:rotateX(180deg)}
+
+/* 信封 */
+.letter-stage{display:grid;justify-items:center;text-align:center;color:var(--paper)}
+.flight,.letter-stage .done{grid-area:1/1}
+.letter-stage .done{align-self:center;width:100%}
+.send-fail{grid-row:2;margin-top:14px}
+.send-fail p{margin:0 0 10px}
+.flight{position:relative;width:min(420px,88%);padding-top:20px}
+.envelope{position:relative;width:100%;aspect-ratio:887.5/566;perspective:900px}
+.envelope svg{position:absolute;left:0;top:0;width:100%;height:auto;display:block;overflow:visible}
+.env-front{z-index:3}
+/* 上蓋：軸心對準蓋子上緣（viewBox 407 單位中的第 6.6）；兩面各自藏背面，翻開時看到內襯、蓋上時看到外面 */
+.env-flap{position:absolute;left:0;top:0;width:100%;aspect-ratio:887.5/407;z-index:1;transform-style:preserve-3d;transform-origin:50% 1.62%;transform:rotateX(180deg)}
+.env-flap svg{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.env-flap .flap-in{transform:rotateX(180deg)}
+.env-letter{position:absolute;z-index:2;visibility:hidden}
+.flight.inserted .env-letter{visibility:visible}
+.flight.sealed .env-letter{visibility:hidden}
+.seal{position:absolute;z-index:5;left:50%;top:58%;width:72px;height:72px;margin:-36px 0 0 -36px;object-fit:contain;filter:drop-shadow(0 2px 2px rgba(35,26,22,.35));transform:scale(0)}
+.flight.sealed .env-flap{transform:rotateX(0);z-index:4}
+.flight.sealed .seal{transform:scale(1)}
+
+/* 封好後信封縮小，鳥才飛來：鳥的線條細，信封縮小後兩者粗細才接近 */
+.flight.small .envelope{transform:scale(.65)}
+
+/* 小鳥：路徑由 JS 控制。素材從頭版 banner 拆出，翅膀、尾巴的揮動寫在 SVG 裡；這裡只加整隻鳥慢慢上下起伏
+   尺寸、位置以縮小後的信封為準（鳥在信封裡，會跟著一起縮），讓腳爪落在信封上緣、離左右角約 15% 處：
+   左鳥 viewBox 186×194，腳爪約在 (55%, 84%)；右鳥 192×270，腳爪約在 (37.5%, 63%)；兩隻每單位同比例 */
+.carrier{position:absolute;z-index:0;opacity:0} /* 整隻鳥在信封後面（DOM 排在 env-back 前） */
+/* 同一隻鳥再疊一層在信封前面，只露出腳爪，看起來像爪子抓著信封 */
+.carrier.claw{z-index:6}
+.carrier.l.claw{clip-path:inset(73% 34% 9% 43%)}
+.carrier.r.claw{clip-path:polygon(26% 55%,45.5% 55%,45.5% 63.5%,42% 63.5%,42% 67%,26% 67%)} /* 右下角挖掉：那裡是藏在爪子後面的尾巴 */
+.carrier img{display:block;width:100%;height:auto}
+.carrier.l{width:50%;left:-12.4%;top:-65.5%}
+.carrier.r{width:51.6%;right:-17.3%;top:-68.9%}
+.flight.carried .carrier{opacity:1}
+.flight.flapping:not(.carried) .carrier img{animation:hover 1.1s ease-in-out infinite alternate} /* 抓住信封後就不再上下飄，腳爪才黏在信封上 */
+.flight.flapping .carrier.r img{animation-delay:-.5s}
+@keyframes hover{from{transform:translateY(2px)}to{transform:translateY(-5px)}}
+
+/* 完成 */
+.letter-stage .done h3{font-weight:var(--fw-bold);font-size:var(--fs-h1);margin:0}
+.letter-stage .done h3:focus{outline:none}
+.letter-stage .done p{margin:6px 0 4px;font-size:var(--fs-body)}
+.letter-stage .done .nav-row{justify-content:center}
+
+@media (max-width:560px){
+  .big-choice{grid-template-columns:1fr}
+  .big-choice img{height:72px}
+  .sheet-letter .body .k{width:5.2em}
+}

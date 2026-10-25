@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leo &amp; Min 的婚禮 · 2026.12.13</title>
+<meta name="description" content="Leo &amp; Min 要結婚了！2026.12.13，誠摯邀請你來。">
+<meta property="og:title" content="Leo &amp; Min 的婚禮 · 2026.12.13">
+<meta property="og:description" content="一交往就是一輩子。誠摯邀請你來見證。">
+<meta property="og:image" content="assets/og.png">
+<meta name="theme-color" content="#EC92AB">
+<link rel="icon" href="assets/flowerP2.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- 樣式：依序載入（後面的會蓋過前面的，motion.css 一定要放最後） -->
+<link rel="stylesheet" href="css/base.css?v=20261024b">
+<link rel="stylesheet" href="css/nav.css?v=20261024b">
+<link rel="stylesheet" href="css/hero.css?v=20261025a">
+<link rel="stylesheet" href="css/meadow.css?v=20261024d">
+<link rel="stylesheet" href="css/soil.css?v=20261024b">
+<link rel="stylesheet" href="css/guide.css?v=20261025a">
+<link rel="stylesheet" href="css/rsvp.css?v=20261024b">
+<link rel="stylesheet" href="css/motion.css?v=20261024b">
+</head>
+<body>
+
+<nav class="nav" aria-label="主選單">
+  <a class="pill brand" href="#top">Leo &amp; Min</a>
+  <ul>
+    <li><a class="pill" href="#venue">婚禮資訊</a></li>
+    <li><a class="pill cta" href="#desk">回函</a></li>
+    <li><a class="pill" href="#guide">還可以去哪裡玩</a></li>
+  </ul>
+</nav>
+
+<!-- ====== HERO：粉紅天空、山丘、拱門下跳舞；往下滑草叢一層層長上來 ====== -->
+<header class="hero" id="top">
+  <div class="layer" data-f=".8" data-m=".15"><img class="bgc bgc-a" src="assets/bgcloud-a.svg" alt=""><img class="bgc bgc-b" src="assets/bgcloud-b.svg" alt=""><img class="bgc bgc-c" src="assets/bgcloud-c.svg" alt=""></div>
+  <div class="layer" data-f=".72" data-m="0.3"><div class="frame"><img class="fp hero-title title-float" src="assets/title.svg?v=1" alt="wedding"></div></div>
+  <!-- 天空雲：h-far.svg 裡的雲和 wedding 字樣，由 js/hero-far.js 從遠山圖拆出來放這裡；在山後面、捲動比山慢 -->
+  <div class="layer" data-f=".72" data-m="0.15"><div class="frame" id="far-clouds"></div></div>
+    <div class="layer" data-f=".66" data-m="0.2"><div class="frame"><img class="fp sc sc-far" src="assets/h-far.svg?v=20" alt=""></div></div>
+  <div class="layer" data-f=".58" data-m="0.4"><div class="frame"><img class="fp sc sc-hills" src="assets/h-hills.svg?v=14" alt=""></div></div>
+  <div class="layer" data-f=".48" data-m="0.6"><div class="frame"><img class="fp sc sc-arch" src="assets/h-arch.svg?v=15" alt=""></div></div>
+  <div class="layer" data-f=".42" data-m="0.9"><div class="frame"><div class="fp hero-birds"><img class="bob bird-img" src="assets/art/bird-banner.svg" alt="兩隻鳥叼著 20261213 的布條"></div></div></div>
+  <div class="layer ground" data-f=".42" data-m="0.8"><div class="frame"><img class="fp sc" data-spin src="assets/h-ground.svg?v=16" alt=""><div class="fp hero-ground-fill"></div></div></div>
+  <div class="layer" data-f=".42" data-m="1.0"><div class="frame"><img class="fp couple-img" src="assets/art/couple-dance.svg?v=6" alt="穿白紗的貓新娘與穿西裝的狗新郎牽手跳舞"></div></div>
+  <!-- 第四層：前景灌木分兩張圖（右 h-near2 稍慢、左 h-near1），視差只差一點點，首屏從視窗下緣露出約 15～20%、看得到花（css/hero.css 的 78svh），往下滑再升上來。
+       data-sway：花會搖，游標掃過或手指點一下會晃；在 Illustrator 包成群組的小樹叢各自有一點捲動視差（js/flowers.js） -->
+  <div class="layer near near-back" data-f="-.11" data-m="1.5"><img class="fp hero-near" data-sway src="assets/h-near2.svg?v=3" alt=""></div>
+  <div class="layer near" data-f="-.14" data-m="1.7"><img class="fp hero-near" data-sway src="assets/h-near1.svg?v=3" alt=""><div class="fp hero-near-fill"></div></div>
+  <div class="cue" id="cue" aria-hidden="true">Scroll
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</header>
+
+<main>
+<!-- ====== 草原：木牌立在草地上 ====== -->
+<section class="meadow">
+  <div class="intro" id="invite">
+      <p class="reveal">各位朋朋好。</p>
+      <p class="reveal">國琳和芯敏愛情長跑多年，<br>為了能在彼此的手術同意書上順利簽名，<br>決定互許終身，成為彼此的法定家屬。</p>
+      <p class="reveal">謝謝出現在我們生命中各個時期的朋朋們，<br>陪伴我們一同歡笑、成長。</p>
+      <p class="reveal">現在，是時候來驗收成果了<br>希望大家一起來參↗加↘派↗對↘</p>
+    </div>
+  <div class="gap" id="date"></div>
+
+  <!-- ====== 日期與地點：樹叢中間簍空 ====== -->
+  <div class="bushcard reveal" id="venue">
+    <img class="bc-art" src="assets/bush-frame.svg" data-bushframe alt="" width="1920" height="935">
+    <div class="bc-in">
+      <p class="bc-date">2026.12.13<small>（日）</small></p>
+      <p class="bc-name" id="venueName">橋頭糖廠百世莊園 物五會館</p>
+      <p class="bc-addr" id="venueAddr">高雄市橋頭區糖廠路24號</p>
+      <p class="bc-addr" id="venueTransit">火車：橋頭站｜高捷：橋頭火車站（R23）</p>
+      <p class="bc-time"><span>入席 <b>12:00</b></span><span>開席 <b>12:36</b></span></p>
+      <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        開啟 Google 地圖</a>
+    </div>
+    <div class="cat">
+      <img src="assets/cat-back.svg" alt="" aria-hidden="true">
+      <img class="cat-tail" src="assets/cat-tail.svg" alt="" aria-hidden="true">
+      <img class="cat-face" src="assets/cat-face.svg" alt="" aria-hidden="true">
+      <img src="assets/cat-front.svg" alt="石虎躲在灌木裡探頭">
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- ====== 回函：填一份賓客回函給我們 ====== -->
+  <div class="rsvp-wrap" id="rsvp">
+    <!-- 草叢裡的拍立得：一張一個故事，錯落排列。要加照片就複製一個 <figure class="snap">，
+         --r 是傾斜角度、--pos 是照片裁切的對焦位置；圖說寫在 figcaption -->
+    <div class="album">
+      <figure class="snap reveal" style="--r:-4deg;--pos:50% 40%">
+        <div class="snap-in">
+          <img src="assets/photo-0953.webp" alt="新郎拿著紅色囍字歪頭，新娘從後面搭著他的肩膀" loading="lazy" width="800" height="1200">
+          <figcaption>國琳和芯敏<wbr>淡大社團<wbr>聚會的地方。<wbr>組聚了兩年，<wbr>背後的餐廳<wbr>從沒吃過。</figcaption>
+        </div>
+        <img class="snap-bush back" src="assets/bushBack.svg" alt="" aria-hidden="true">
+        <img class="snap-bush front" src="assets/bushFront.svg" alt="" aria-hidden="true">
+      </figure>
+      <figure class="snap reveal" style="--r:3deg;--pos:50% 62%">
+        <div class="snap-in">
+          <img src="assets/photo-1019.webp?v=2" alt="新娘提著白紗、新郎拿著捧花，牽手笑著走在馬路上" loading="lazy" width="800" height="1224">
+          <figcaption>淡大<wbr>車流密集的<wbr>十字路口，<wbr>還好<wbr>抓到空檔。</figcaption>
+        </div>
+        <img class="snap-bush back" src="assets/bushBack.svg" alt="" aria-hidden="true">
+        <img class="snap-bush front" src="assets/bushFront.svg" alt="" aria-hidden="true">
+      </figure>
+      <figure class="snap reveal" style="--r:-2deg;--pos:50% 50%">
+        <div class="snap-in">
+          <img src="assets/ezgif.webp" alt="新人舉著「嫁分你」和「2026.12.13」的手寫牌子" loading="lazy">
+          <figcaption>1213快來玩！</figcaption>
+        </div>
+        <img class="snap-bush back" src="assets/bushBack.svg" alt="" aria-hidden="true">
+        <img class="snap-bush front" src="assets/bushFront.svg" alt="" aria-hidden="true">
+      </figure>
+    </div>
+
+    <div class="gap"></div>
+    <div class="desk reveal" id="desk">
+
+    
+
+      <!-- 已寄過的提示 -->
+      <div class="sent-before" id="sentBefore" hidden>
+        <p>📮 <b id="sentName"></b>，你的回函我們已經收到了！</p>
+        <div class="sent-actions">
+          <button type="button" class="btn ghost" id="fixPrev" hidden>寫錯了，改一下重寄</button>
+          <button type="button" class="btn ghost" id="writeAnother">再幫親朋好友填一份</button>
+        </div>
+      </div>
+
+      <!-- 更正上一封時的提示 -->
+      <p class="correct-note" id="correctNote" hidden>✏️ 正在更正上一份回函，寄出時會標上【更正】</p>
+
+      <!-- ====== 信紙：分步填寫 ====== -->
+      <form class="sheets" id="rsvpForm" novalidate>
+        <div class="sheet is-active" data-step="1" role="group" aria-label="第 1 張，共 4 張">
+          <h2 class="lt-title">國琳 &amp; 芯敏 <br> 婚宴賓客回函</h2>
+          <p class="lt-sub">敬請於 <b id="deadline">11/15</b> 前回覆，期待與您相見♥</p>
+          <label class="fld"><span>賓客姓名</span><input name="name" autocomplete="name" required placeholder="例如：王小明"></label>
+          <div class="fld" role="radiogroup" aria-label="與新人的關係"><span>與新人的關係</span>
+            <div class="chips">
+              <label><input type="radio" name="relation" value="認識新郎這邊" required><b>新郎親友</b></label>
+              <label><input type="radio" name="relation" value="認識新娘這邊"><b>新娘親友</b></label>
+              <label><input type="radio" name="relation" value="雙方我都認識"><b>雙方親友</b></label>
+            </div>
+          </div>
+          <div class="lt-row">
+            <label class="fld"><span>聯絡電話</span><input name="phone" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="15" autocomplete="tel" required placeholder="0912345678"></label>
+            <label class="fld"><span>Email</span><input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
+          </div>
+          <p class="err" role="alert"></p>
+          <div class="nav-row">
+            <button type="button" class="btn ghost prev" hidden>← 上一張</button>
+            <button type="button" class="btn next">下一張 →</button>
+          </div>
+          <span class="lt-page" aria-hidden="true">1 / 4</span>
+        </div>
+        <div class="sheet" data-step="2" role="group" aria-label="第 2 張，共 4 張">
+          <p class="lt-to">出席意願<small>12/13（日）午宴</small></p>
+          <div class="big-choice" role="radiogroup" aria-label="是否出席">
+            <label><input type="radio" name="attend" value="親自出席，絕對不能少了我！" required>
+              <span><img src="assets/h-couple.webp" alt=""><b>欣然出席</b><small>準時赴宴</small></span></label>
+            <label><input type="radio" name="attend" value="無法出席，獻上我的祝福！">
+              <span><img src="assets/flowerPG.svg" alt=""><b>不克出席</b><small>衷心祝福</small></span></label>
+          </div>
+          <p class="err" role="alert"></p>
+          <div class="nav-row">
+            <button type="button" class="btn ghost prev">← 上一張</button>
+            <button type="button" class="btn next">下一張 →</button>
+          </div>
+          <span class="lt-page" aria-hidden="true">2 / 4</span>
+        </div>
+        <div class="sheet" data-step="3" role="group" aria-label="第 3 張，共 4 張">
+          <p class="lt-to">出席人數</p>
+          <div class="stepper" data-name="guests" data-min="1" data-max="10" data-val="1">
+            <span class="lbl">出席人數<small>含賓客本人</small></span>
+            <button type="button" class="minus" aria-label="減少出席人數">−</button><output>1</output><button type="button" class="plus" aria-label="增加出席人數">＋</button>
+          </div>
+          <div class="stepper" data-name="chairs" data-min="0" data-max="6" data-val="0">
+            <span class="lbl">兒童座椅<small>需要幾張</small></span>
+            <button type="button" class="minus" aria-label="減少兒童座椅">−</button><output>0</output><button type="button" class="plus" aria-label="增加兒童座椅">＋</button>
+          </div>
+          <div class="stepper" data-name="veg" data-min="0" data-max="10" data-val="0">
+            <span class="lbl">素食<small>含同行者</small></span>
+            <button type="button" class="minus" aria-label="減少素食人數">−</button><output>0</output><button type="button" class="plus" aria-label="增加素食人數">＋</button>
+          </div>
+          <p class="err" role="alert"></p>
+          <div class="nav-row">
+            <button type="button" class="btn ghost prev">← 上一張</button>
+            <button type="button" class="btn next">下一張 →</button>
+          </div>
+          <span class="lt-page" aria-hidden="true">3 / 4</span>
+        </div>
+        <div class="sheet" data-step="4" role="group" aria-label="第 4 張，共 4 張">
+          <p class="lt-to">喜帖與留言</p>
+          <div class="fld" role="radiogroup" aria-label="是否需要喜帖"><span>喜帖寄送</span>
+            <div class="chips">
+              <label><input type="radio" name="invite" value="需要，請寄電子喜帖給我" required><b>電子喜帖</b></label>
+              <label><input type="radio" name="invite" value="需要，請寄紙本喜帖給我"><b>紙本喜帖</b></label>
+              <label><input type="radio" name="invite" value="不用啦，相關資訊我都清楚"><b>不需要</b></label>
+            </div>
+          </div>
+          <label class="fld"><span>給新人的話<small>（選填）</small></span><textarea name="message" rows="4" placeholder="祝福、點歌、想一起拍照⋯⋯都可以"></textarea></label>
+          <p class="err" role="alert"></p>
+          <div class="nav-row">
+            <button type="button" class="btn ghost prev">← 上一張</button>
+            <button type="button" class="btn next">填好了，產生回函 ✉</button>
+          </div>
+          <span class="lt-page" aria-hidden="true">4 / 4</span>
+          <!-- 按「填好了」後，回函直接寫在這張紙上：大標＋一行一欄（第三人稱），內容由 js/rsvp.js 的 compose() 填入 -->
+          <article class="sheet-letter" id="letter" aria-live="polite">
+            <h3 class="to">國琳 &amp; 芯敏婚宴賓客回函</h3>
+            <div class="body" id="letterBody"></div>
+            <p class="from">回函日期 <span id="letterDate"></span></p>
+            <div class="nav-row" id="letterActions">
+              <button type="button" class="btn ghost" id="editBtn">再改一下</button>
+              <button type="button" class="btn" id="sendBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+                封好回函，寄出！</button>
+            </div>
+          </article>
+        </div>
+      </form>
+
+      <!-- ====== 信封與寄出 ====== -->
+      <div class="letter-stage" id="letterStage" hidden>
+        <div class="flight" id="flight">
+          <div class="envelope" id="envelope">
+            <span class="carrier l"><img src="assets/art/bird-l.svg" alt=""></span>
+            <span class="carrier r"><img src="assets/art/bird-r.svg" alt=""></span>
+            <!-- 信封圖形取自 assets/letter.svg（Illustrator 匯出）：拆成背面＋內襯、前面口袋、上蓋三層，信紙夾在背面和口袋之間 -->
+            <svg class="env-back" viewBox="0 396 887.5 566" aria-hidden="true"><rect x="7.9" y="402.6" width="870.4" height="551.9" fill="none" stroke="#231815" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/><rect x="7.9" y="402.6" width="870.4" height="551.9" fill="#fed797"/><path d="M795.1,462.6v-60s-704.3.3-704.3.3v60.1c66.6,49,157.9,116.2,214.7,158.1h275C637.3,579.1,728.6,511.7,795.1,462.6Z" fill="#fdf6eb"/></svg>
+            <div class="env-letter" id="envLetter" aria-hidden="true"></div>
+            <svg class="env-front" viewBox="0 396 887.5 566" aria-hidden="true"><g stroke="#d7be95" stroke-width="3"><path d="M7.8,403s35.1,25.8,83.1,61.1c66.5,49,157.8,116.3,214.6,158.2h-52.8c-17,0-33.2,5.4-46.5,15-8.6,6.2-16.1,14.2-21.7,23.6L8.1,954.9h0" fill="#fedeaa" stroke-linejoin="round"/><path d="M878.3,954.5l-137.9-239.1-30.9-53.5c-14.2-24.6-40.5-39.8-69-39.8h-60c56.8-41.9,148.1-109.2,214.6-158.3,47.9-35.4,82.9-61.2,82.9-61.2" fill="#fedeaa" stroke-linejoin="round"/><path d="M877.4,954.5h.9s-137.9-239.1-137.9-239.1l-30.9-53.5c-14.2-24.6-40.5-39.8-69-39.8h-60s-275,.2-275,.2h-52.8c-17,0-33.2,5.4-46.5,15-8.6,6.2-16.1,14.2-21.7,23.6L8.1,954.9h0" fill="#fed797"/></g></svg>
+            <!-- 上蓋兩面：flap-out 是蓋上後看到的外面（尖角朝下），flap-in 是打開時看到的內襯（原圖方向，位移 -1.6 是為了翻轉後和外面疊在同一格）。
+                 內襯那面的黑框只畫兩條斜邊、不畫折線那一段：原圖裡它被信封本體蓋住，這裡蓋子疊在本體上面，畫了會多一條黑線 -->
+            <div class="env-flap" aria-hidden="true">
+              <svg class="flap-out" viewBox="0 0.7 887.5 407"><g transform="matrix(1 0 0 -1 0 410)"><path d="M878.8,402.7L478.6,23.5c-19.6-18.6-50.5-18.6-70.2,0L8.6,403.2h72.8C81.3,402.3,878.8,402.7,878.8,402.7Z" fill="none" stroke="#231815" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/><path d="M878.8,402.7L478.6,23.5c-19.6-18.6-50.5-18.6-70.2,0L8.6,403.2h72.8C81.3,402.3,878.8,402.7,878.8,402.7Z" fill="#fedeaa" stroke="#d7be95" stroke-width="3" stroke-linejoin="round"/></g></svg>
+              <svg class="flap-in" viewBox="0 0.7 887.5 407"><g transform="translate(0 -1.6)"><path d="M878.8,402.7L478.6,23.5c-19.6-18.6-50.5-18.6-70.2,0L8.6,403.2" fill="none" stroke="#231815" stroke-width="12" stroke-linejoin="round"/><path d="M878.8,402.7L478.6,23.5c-19.6-18.6-50.5-18.6-70.2,0L8.6,403.2h72.8C81.3,402.3,878.8,402.7,878.8,402.7Z" fill="#fed797"/><path d="M472,97.6c-16-15.1-40.9-15.1-56.8,0L93.4,403.2l700.6-.4L472,97.6Z" fill="#fdf6eb"/><line x1="32.4" y1="402.6" x2="849.2" y2="402.6" stroke="#d7be95" stroke-width="3"/></g></svg>
+            </div>
+            <img class="seal" src="assets/seal-cat.png" alt="" aria-hidden="true">
+            <span class="carrier l claw"><img src="assets/art/bird-l.svg" alt=""></span>
+            <span class="carrier r claw"><img src="assets/art/bird-r.svg" alt=""></span>
+          </div>
+        </div>
+        <div class="send-fail" id="sendFail" hidden>
+          <p role="alert">網路好像斷了，回函沒寄出去，再試一次吧！</p>
+          <button type="button" class="btn" id="retryBtn">再寄一次</button>
+        </div>
+        <div class="done" id="done" hidden>
+          <h3 tabindex="-1">寄出囉！</h3>
+          <p id="doneMsg">兩隻鳥已經把回函叼走了，我們收到會很開心的。</p>
+          <div class="nav-row">
+            <button type="button" class="btn ghost" id="fixBtn" hidden>寫錯了，改一下重寄</button>
+            <button type="button" class="btn ghost" id="againBtn">再幫親朋好友填一份</button>
+            <a class="btn" id="calBtn2" href="#" target="_blank" rel="noopener">加入 Google 日曆</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</section>
+
+<!-- 草地下緣（花邊）接到泥土 -->
+<div class="soil-edge" aria-hidden="true"></div>
+
+<!-- ====== 泥土層：高雄小抄 ====== -->
+<section class="soil">
+  <!--
+  <svg class="strata" viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="#231A16" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".55"><path d="M0 180 C200 160 380 210 560 190 S900 150 1080 185 S1400 215 1600 170" vector-effect="non-scaling-stroke"/><path d="M0 520 C240 500 420 560 640 530 S980 480 1200 520 S1460 560 1600 510" vector-effect="non-scaling-stroke"/><path d="M0 830 C260 810 520 860 760 830 S1160 790 1600 840" vector-effect="non-scaling-stroke"/><path d="M220 60 C230 120 210 150 240 210 M240 120 C270 130 280 150 300 150 M1320 40 C1310 110 1340 150 1320 230 M1325 140 C1300 150 1290 170 1270 170" vector-effect="non-scaling-stroke"/></g></svg>
+  <span class="stone stone-1"></span>
+  <span class="stone stone-2"></span>
+  <span class="stone stone-3 hide-sm"></span>
+  <span class="stone stone-4"></span>-->
+
+  <!-- ====== 高雄小抄：家庭版／個人版 ====== -->
+  <div class="guide reveal" id="guide">
+    <div class="g-head">
+      <!-- <span class="tag">KAOHSIUNG</span> -->
+      <h2>北部朋友的高雄小抄</h2>
+      <p>難得南下，婚禮前後多留半天吧！</p>
+    </div>
+    <div class="g-tabs" role="tablist" aria-label="攻略版本">
+      <button role="tab" id="g-fam-tab" aria-controls="g-fam" aria-selected="true">帶小孩・家庭版</button>
+      <button role="tab" id="g-solo-tab" aria-controls="g-solo" aria-selected="false" tabindex="-1">無小孩・個人版</button>
+    </div>
+    <div class="g-body">
+    <!-- 地圖：地點資料在 js/guide-map.js 的 SPOTS -->
+    <figure class="g-map-wrap">
+      <div class="g-map" id="g-map" role="group" aria-label="高雄沿海市區地圖：標出婚宴地點、高鐵與台鐵車站、捷運路線、推薦景點與美食">
+        <img src="assets/kaohsiung-map.svg" alt="">
+        <span class="g-sea" aria-hidden="true">台灣海峽</span>
+      </div>
+      <figcaption>
+        <ul class="g-legend" aria-label="圖例">
+          <li><span class="g-dot g-dot-venue" aria-hidden="true"></span>婚宴</li>
+          <li><span class="g-dot g-dot-sight" aria-hidden="true"></span>景點</li>
+          <li><span class="g-dot g-dot-food" aria-hidden="true"></span>美食</li>
+        </ul>
+        <ul class="g-legend g-legend-lines" aria-label="交通路線圖例">
+          <li><svg viewBox="0 0 22 8" aria-hidden="true"><line class="g-route g-route-thsr" x1="1" y1="4" x2="21" y2="4"/></svg>高鐵</li>
+          <li><svg viewBox="0 0 22 8" aria-hidden="true"><line class="g-route g-route-tra" x1="0" y1="4" x2="22" y2="4"/><line class="g-route g-route-tra-dash" x1="0" y1="4" x2="22" y2="4"/></svg>台鐵</li>
+          <li><svg viewBox="0 0 22 8" aria-hidden="true"><line class="g-route g-route-red" x1="1" y1="4" x2="21" y2="4"/></svg>捷運紅線</li>
+          <li><svg viewBox="0 0 22 8" aria-hidden="true"><line class="g-route g-route-orange" x1="1" y1="4" x2="21" y2="4"/></svg>捷運橘線</li>
+          <li><svg viewBox="0 0 22 8" aria-hidden="true"><line class="g-route g-route-lrt" x1="1" y1="4" x2="21" y2="4"/></svg>環狀輕軌</li>
+        </ul>
+        <small class="g-credit">底圖：<a href="https://commons.wikimedia.org/wiki/File:Kaohsiung_districts_blank.svg" target="_blank" rel="noopener">Luuva / Wikimedia Commons</a>（<a href="https://www.gnu.org/licenses/fdl-1.3.html" target="_blank" rel="noopener">GFDL</a>），已裁切改色；路線 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></small>
+      </figcaption>
+    </figure>
+    <div class="g-plans">
+    <div class="g-panel" role="tabpanel" id="g-fam" aria-labelledby="g-fam-tab">
+      <div class="g-col">
+        <h3><img src="assets/flowerYG.svg" alt="">第 1 日</h3>
+        <!-- 第 1 日兩條路線二選一（切換在 js/guide-tabs.js；地圖上的點用 guide-map.js SPOTS 的 route 對應） -->
+        <div class="g-pick" role="tablist" aria-label="第 1 日路線">
+          <button role="tab" id="g-r-park-tab" aria-controls="g-r-park" aria-selected="true">親子樂園＋衛武營</button>
+          <button role="tab" id="g-r-pier-tab" aria-controls="g-r-pier" aria-selected="false" tabindex="-1">鹽埕＋駁二</button>
+        </div>
+        <div role="tabpanel" id="g-r-park" aria-labelledby="g-r-park-tab">
+        <ol class="g-steps">
+          <li class="g-step" data-spot="thsr tra-ks"><span class="g-mk" aria-hidden="true">◆</span><div><b>搭高鐵至左營站，或搭台鐵至高雄車站</b><p>兩站都可以直接轉捷運紅線</p></div></li>
+          <li class="g-step" data-spot="park"><span class="g-mk" aria-hidden="true">▼</span><div><b>捷運紅線到凱旋站，轉輕軌到凱旋武昌站</b><p>下車走路約 1 分鐘就到高雄親子遊樂園區（免費入園，週一、週二休園）</p></div></li>
+          <li class="g-step" data-spot="park"><span class="g-mk" aria-hidden="true">▼</span><div><b>上午在親子遊樂園區放電</b></div></li>
+          <li class="g-step" data-spot="park wwy"><span class="g-mk" aria-hidden="true">▼</span><div><b>午餐在園區美食區或衛武營簡單吃</b></div></li>
+          <li class="g-step" data-spot="wwy"><span class="g-mk" aria-hidden="true">▼</span><div><b>下午到衛武營都會公園散步、跑草地</b><p>旁邊的衛武營藝文中心有大片屋簷，可以遮陽躲雨</p></div></li>
+          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推介台灣菜），建議先訂位</p></div></li>
+          <li class="g-step"><span class="g-mk" aria-hidden="true">●</span><div><b>回高雄當地旅宿</b></div></li>
+        </ol>
+        </div>
+        <div role="tabpanel" id="g-r-pier" aria-labelledby="g-r-pier-tab" hidden>
+        <ol class="g-steps">
+          <li class="g-step" data-spot="thsr tra-ks"><span class="g-mk" aria-hidden="true">◆</span><div><b>搭高鐵至左營站，或搭台鐵至高雄車站</b><p>兩站都可以直接轉捷運紅線</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至鹽埕埔站附近中午用餐</b><p>美食推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>買杯奶茶，再去塩埕第一公有市場逛市集</b><p>奶茶推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
+          <li class="g-step" data-spot="pier2"><span class="g-mk" aria-hidden="true">▼</span><div><b>走到駁二藝術特區看裝置藝術</b><p>從鹽埕埔走路約 10 分鐘；小孩可以去哈瑪星台灣鐵道館看火車模型</p></div></li>
+          <li class="g-step" data-spot="pier2"><span class="g-mk" aria-hidden="true">▼</span><div><b>看大港橋旋轉，到棧貳庫看海休息</b></div></li>
+          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推介台灣菜），建議先訂位</p></div></li>
+          <li class="g-step"><span class="g-mk" aria-hidden="true">●</span><div><b>回高雄當地旅宿</b></div></li>
+        </ol>
+        </div>
+      </div>
+      <div class="g-col">
+        <h3><img src="assets/flowerPG.svg" alt="">第 2 日</h3>
+        <ol class="g-steps">
+          <li class="g-step" data-spot="tra-qt mrt-qt"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭捷運或台鐵前往橋頭車站</b></div></li>
+          <li class="g-step" data-spot="venue"><span class="g-mk" aria-hidden="true">▼</span><div><b>參加 黃曾府喜宴</b></div></li>
+          <li class="g-step" data-spot="venue"><span class="g-mk" aria-hidden="true">▼</span><div><b>結束後可移動到旁邊橋頭糖廠散步</b></div></li>
+          <li class="g-step"><span class="g-mk" aria-hidden="true">◆</span><div><b>快樂賦歸</b></div></li>
+        </ol>
+      </div>
+    </div>
+    <div class="g-panel" role="tabpanel" id="g-solo" aria-labelledby="g-solo-tab" hidden>
+      <div class="g-col">
+        <h3><img src="assets/flowerYG.svg" alt="">第 1 日</h3>
+        <ol class="g-steps">
+          <li class="g-step" data-spot="thsr tra-ks"><span class="g-mk" aria-hidden="true">◆</span><div><b>搭高鐵至左營站，或搭台鐵至高雄車站</b><p>兩站都可以直接轉捷運紅線</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至鹽埕埔站附近中午用餐</b><p>美食推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>買杯奶茶，再去塩埕第一公有市場逛市集</b><p>奶茶推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
+          <li class="g-step" data-spot="ferry-gs ferry-kw"><span class="g-mk" aria-hidden="true">▼</span><div><b>至鼓山輪渡站或棧貳庫輪渡站，搭渡輪至旗津</b></div></li>
+          <li class="g-step" data-spot="cijin"><span class="g-mk" aria-hidden="true">▼</span><div><b>走訪旗後山，賞燈塔、礮臺和海港風景</b></div></li>
+          <li class="g-step" data-spot="cijin"><span class="g-mk" aria-hidden="true">▼</span><div><b>旗津廟前路享用晚餐</b></div></li>
+          <li class="g-step"><span class="g-mk" aria-hidden="true">●</span><div><b>回高雄當地旅宿</b></div></li>
+        </ol>
+      </div>
+      <div class="g-col">
+        <h3><img src="assets/flowerPG.svg" alt="">第 2 日</h3>
+        <ol class="g-steps">
+          <li class="g-step" data-spot="tra-qt mrt-qt"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭捷運或台鐵前往橋頭車站</b></div></li>
+          <li class="g-step" data-spot="venue"><span class="g-mk" aria-hidden="true">▼</span><div><b>參加 黃曾府喜宴</b></div></li>
+          <li class="g-step" data-spot="venue"><span class="g-mk" aria-hidden="true">▼</span><div><b>結束後可移動到旁邊橋頭糖廠散步</b></div></li>
+          <li class="g-step"><span class="g-mk" aria-hidden="true">◆</span><div><b>快樂賦歸</b></div></li>
+        </ol>
+      </div>
+    </div>
+    </div>
+    </div>
+    <p class="g-foot">高鐵左營站、台鐵高雄車站都可轉捷運紅線，市區還有環狀輕軌。營業時間以店家公告為準，出發前記得再查一下喔！</p>
+  </div>
+</section>
+
+<!-- 浮島底部 → 粉紅天空 -->
+<svg class="underside" viewBox="0 0 1600 320" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M-5 0 L1605 0 L1605 20 C1500 70 1440 90 1380 130 C1300 150 1240 190 1160 215 C1080 230 1020 260 960 290 C900 310 840 318 790 316 C730 312 680 290 620 270 C540 250 470 220 400 190 C320 170 250 130 180 100 C110 70 50 40 -5 25 Z" fill="#744A2F"/>
+  <path d="M1605 20 C1500 70 1440 90 1380 130 C1300 150 1240 190 1160 215 C1080 230 1020 260 960 290 C900 310 840 318 790 316 C730 312 680 290 620 270 C540 250 470 220 400 190 C320 170 250 130 180 100 C110 70 50 40 -5 25" fill="none" stroke="#231A16" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <!--<path d="M300 40 C340 90 420 110 450 160 M1180 60 C1150 110 1100 130 1080 190 M760 120 C780 170 760 220 790 270" fill="none" stroke="#231A16" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".6"/><path d="M640 0 C640 60 600 90 610 140 C620 180 660 190 650 230" fill="none" stroke="#3B7C5C" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>-->
+</svg>
+      </main>
+
+<footer>
+  <!--
+  <img class="deco" src="assets/cloudL.svg" alt="" data-speed="-0.2" style="width:180px;left:-50px;top:-10px">
+  <img class="deco" src="assets/cloudR.svg" alt="" data-speed="0.15" style="width:160px;right:4%;top:40px;transform:scaleX(-1)">
+  <img class="signw" src="assets/sign.svg" alt="Leo &amp; Min"> -->
+  <p>12/13 · 不見不散！</p>
+</footer>
+
+<!-- 程式：config.js 放要改的設定（場地、地圖、表單） -->
+<script src="js/config.js" defer></script>
+<script src="js/venue.js" defer></script>
+<script src="js/rsvp.js" defer></script>
+<script src="js/guide-tabs.js?v=20261024f" defer></script>
+<script src="js/guide-map.js?v=20261025b" defer></script>
+<script src="js/theme-color.js" defer></script>
+<script src="js/hero.js?v=2" defer></script>
+<script src="js/hero-far.js?v=3" defer></script>
+<script src="js/flowers.js" defer></script>
+<script src="js/couple.js" defer></script>
+<script src="js/ground-flowers.js" defer></script>
+<script src="js/bush-frame.js" defer></script>
+<script src="js/reveal.js" defer></script>
+</body>
+</html>

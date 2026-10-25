@@ -1,0 +1,124 @@
+/* 還可以去哪裡玩（高雄小抄） */
+/* 高雄小抄 */
+.guide{position:relative;z-index:2;max-width:980px;margin:0 auto;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:7px 7px 0 var(--ink);padding:clamp(22px,4vw,44px)}
+.g-head{text-align:center}
+.g-head .tag{display:inline-block;font-size:var(--fs-xs);letter-spacing:.3em;background:#D9A066;border:2px solid var(--ink);border-radius:999px;padding:2px 14px}
+.g-head h2{font-weight:var(--fw-bold);font-size:var(--fs-h1);line-height:1.25;margin:10px 0 4px}
+.g-head p{color:var(--ink-2);font-size:var(--fs-body);margin:0}
+.g-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:22px 0 26px}
+.g-tabs button{font:inherit;font-size:var(--fs-body);font-weight:var(--fw-medium);min-height:48px;padding:0 22px;border:2.5px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .15s}
+.g-tabs button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.g-tabs button[aria-selected="true"]{background:var(--sun)}
+.g-tabs button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+/* 家庭版第 1 日的路線二選一（比上面的版本切換小一號） */
+.g-pick{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.g-pick button{font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-medium);min-height:40px;padding:0 14px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .15s}
+.g-pick button:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.g-pick button[aria-selected="true"]{background:var(--sun)}
+.g-pick button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+.g-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,36px)}
+.g-panel[hidden]{display:none}
+.g-col h3{display:flex;align-items:center;gap:10px;font-weight:var(--fw-medium);font-size:var(--fs-h2);margin:0 0 10px;padding-bottom:8px;border-bottom:2px dashed #C9B79C}
+.g-col h3 img{width:30px;height:auto}
+.g-col ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.g-col li p{margin:2px 0 0;font-size:var(--fs-sm);line-height:1.6;color:var(--ink-2)}
+.g-name{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.g-name b{font-weight:var(--fw-medium);font-size:var(--fs-body)}
+.g-tag{font-size:var(--fs-xs);letter-spacing:.08em;border:1.5px solid var(--ink);border-radius:999px;padding:0 8px;background:#E5F1EA}
+.g-note{font-size:var(--fs-xs);border-radius:999px;padding:0 8px;background:#F9D9E1;color:#7A2238}
+.g-foot{margin:26px 0 0;text-align:center;font-size:var(--fs-sm);color:var(--ink-2)}
+@media (max-width:720px){.g-panel{grid-template-columns:1fr}}
+.g-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.g-step{display:flex;gap:10px;align-items:flex-start}
+.g-mk{flex:none;width:22px;text-align:center;font-size:var(--fs-sm);line-height:1.7;color:var(--rose)}
+.g-step b{font-weight:var(--fw-medium);font-size:var(--fs-body);line-height:1.5}
+.g-step p{margin:2px 0 0;font-size:var(--fs-sm);line-height:1.6;color:var(--ink-2)}
+/* 地圖在左、行程在右（地點資料在 js/guide-map.js）；手機上下排 */
+.g-body{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(22px,3.4vw,40px);align-items:start}
+.g-plans .g-panel{grid-template-columns:1fr;gap:26px}
+.g-map-wrap{margin:0;position:sticky;top:84px}
+.g-map{position:relative;aspect-ratio:186/190;background:#CFE4E6;border-radius:18px;overflow:hidden;box-shadow:0 0 0 3px var(--ink),5px 5px 0 3px var(--ink)}
+.g-map>img{position:absolute;inset:0;width:100%;height:100%}
+.g-map-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* 交通路線（顏色同下面圖例） */
+.g-route{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.g-route-thsr{stroke:#E06A1B;stroke-width:3.5px}
+.g-route-tra{stroke:var(--ink);stroke-width:4px;stroke-linecap:butt}
+.g-route-tra-dash{stroke:#fff;stroke-width:2px;stroke-dasharray:6 6;stroke-linecap:butt}
+.g-route-red{stroke:#E2231A;stroke-width:3px}
+.g-route-orange{stroke:#F7A600;stroke-width:3px}
+.g-route-lrt{stroke:#8CC63F;stroke-width:3px}
+.g-sea{position:absolute;left:4%;top:24%;writing-mode:vertical-rl;letter-spacing:.5em;font-size:var(--fs-xs);color:#6C969C}
+.g-dot{display:inline-block;width:11px;height:11px;border:2px solid var(--ink);border-radius:50%;background:var(--sun);transition:transform .15s}
+/* 地圖上的點是按鈕：看起來小，但可點的範圍有 32px */
+.g-map .g-dot{position:absolute;z-index:1;padding:0;font:inherit;cursor:pointer;transform:translate(-50%,-50%);width:14px;height:14px}
+.g-map .g-dot::before{content:"";position:absolute;inset:-11px;border-radius:50%}
+.g-map .g-dot:hover,.g-map .g-dot.is-hi{transform:translate(-50%,-50%) scale(1.45);z-index:3}
+.g-map .g-dot:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.g-dot-venue{background:var(--rose)}
+.g-map .g-dot-venue{width:18px;height:18px;z-index:2}
+/* 有編號的圓點（照行程順序，號碼由 guide-map.js 填）放大一點，才放得下數字 */
+.g-map .g-dot.has-num{width:19px;height:19px;display:grid;place-items:center;font-size:11px;font-weight:var(--fw-bold);line-height:1;color:var(--ink)}
+/* 行程那一行前面的同號碼標記 */
+.g-num{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid var(--ink);border-radius:50%;font-size:11px;font-weight:var(--fw-bold);line-height:1;color:var(--ink);vertical-align:-2px}
+.g-num-sight{background:#6FB58A}
+.g-num-food{background:var(--sun)}
+.g-dot-sight{background:#6FB58A}
+.g-dot-food{background:var(--sun)}
+/* 車站：白底圓點，外框是路線色 */
+.g-dot-thsr,.g-dot-tra,.g-dot-mrt{background:#fff;border-width:3px}
+.g-map .g-dot-thsr,.g-map .g-dot-tra,.g-map .g-dot-mrt{width:12px;height:12px}
+.g-dot-thsr{border-color:#E06A1B}
+.g-dot-tra{border-color:var(--ink)}
+.g-dot-mrt{border-color:#E2231A}
+/* 說明小卡：固定放在左邊海上（寬度不超過海面），引線在 js 畫 */
+.g-pop{position:absolute;z-index:4;left:8px;width:36%;padding:7px 10px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);font-size:var(--fs-xs);line-height:1.6;pointer-events:none}
+.g-pop b{display:block;font-size:var(--fs-sm)}
+.g-pop div+div{margin-top:6px;padding-top:6px;border-top:1.5px dashed #C9B79C}
+.g-pop p{margin:2px 0 0;color:var(--ink-2)}
+.g-lead{stroke:var(--ink);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+.g-map-wrap figcaption{margin-top:16px}
+.g-legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:var(--fs-sm)}
+.g-legend-lines{margin-top:6px;gap:2px 14px;font-size:var(--fs-xs);color:var(--ink-2)}
+.g-legend-lines svg{width:22px;height:8px;flex:none}
+.g-legend li{display:flex;align-items:center;gap:6px}
+.g-credit{display:block;margin-top:6px;font-size:11px;color:var(--ink-2);opacity:.75}
+.g-step[data-spot]{border-radius:10px;margin:-4px -8px;padding:4px 8px;transition:background .15s}
+.g-step[data-spot]{cursor:pointer}
+.g-step.is-hi{background:#FDF1CF}
+.g-step.is-active{background:#FCE6A8}
+.g-step[data-spot]:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.g-step.is-flash{animation:g-flash 1.4s ease}
+@keyframes g-flash{0%,40%{background:#FCE6A8}100%{background:transparent}}
+@media (max-width:720px){
+  .g-body{grid-template-columns:1fr}
+  .g-map-wrap{position:static}
+}
+
+/* ---------- 手機版：地圖＋一張行程卡，上一站／下一站（卡片由 guide-map.js 產生；桌機藏起來） ---------- */
+.g-card,.g-pick.g-pick-m{display:none}
+.g-pick button[aria-pressed="true"]{background:var(--sun)}
+.g-card-box{background:#fff;border:2.5px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px;min-height:120px}
+.g-card-meta{display:flex;justify-content:space-between;font-size:var(--fs-xs);color:var(--ink-2);margin-bottom:6px}
+.g-card-row{display:flex;gap:10px;align-items:flex-start}
+.g-card-row b{font-weight:var(--fw-medium);font-size:var(--fs-body);line-height:1.5}
+.g-card-row p{margin:2px 0 0;font-size:var(--fs-sm);line-height:1.6;color:var(--ink-2)}
+.g-card-dots{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:14px 0}
+.g-card-dots button{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:4px;background:#C9B79C;cursor:pointer;transition:width .2s,background .2s}
+.g-card-dots button::before{content:"";position:absolute;inset:-10px -3px}   /* 點小，可點範圍放大 */
+.g-card-dots button[aria-current]{width:22px;background:var(--ink)}
+.g-card-dots button.is-newday{margin-left:12px}
+.g-card-dots button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+.g-card-nav{display:flex;gap:10px}
+.g-card-nav button{flex:1;font:inherit;font-size:var(--fs-body);font-weight:var(--fw-medium);min-height:48px;border:2.5px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s,opacity .15s}
+.g-card-nav .g-card-next{background:var(--sun)}
+.g-card-nav button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.g-card-nav button:disabled{opacity:.35;cursor:default;box-shadow:none}
+.g-card-nav button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+@media (max-width:720px){
+  .g-plans{display:none}                 /* 清單收起來，改看行程卡 */
+  .g-pop,.g-lead{display:none}           /* 海上的說明小卡在手機上太擠，內容已經在行程卡裡 */
+  .g-card{display:block;margin-top:16px}
+  .g-pick.g-pick-m:not([hidden]){display:flex;justify-content:center;margin:0 0 14px}
+  .g-map .g-dot:not(.is-hi){opacity:.55}  /* 目前這站以外的點變淡 */
+}
