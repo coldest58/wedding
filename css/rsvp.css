@@ -83,7 +83,8 @@
 .nav-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px}
 .nav-row .btn:only-child,.nav-row .next{margin-left:auto}
 .sheet .nav-row{margin-top:auto;padding-top:10px}
-.lt-page{position:absolute;left:50%;transform:translateX(-50%);bottom:24px;font-size:var(--fs-xs);color:var(--ink-2);letter-spacing:.15em;pointer-events:none}
+/* 頁碼排在按鈕下面（不用 absolute），手機上按鈕換成兩行也不會被壓到 */
+.lt-page{display:block;text-align:center;margin-top:14px;font-size:var(--fs-xs);color:var(--ink-2);letter-spacing:.15em;pointer-events:none}
 .btn.ghost{background:#fff}
 button.btn{font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-medium);cursor:pointer;color:var(--ink)}
 /* 已寄過的提示：用紙膠帶貼在信紙上方的便條 */
