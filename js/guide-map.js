@@ -250,14 +250,14 @@
     activate([...document.querySelectorAll('#'+panelId+' [data-spot]')].find(x=>!x.closest('[hidden]')));
     fitCard();
   }
-  // 景點和美食照目前看得到的行程順序編號 1、2、3…（車站、婚宴不編號）；
+  // 景點、美食、婚宴照目前看得到的行程順序編號 1、2、3…（車站不編號；第 2 日接續第 1 日的號碼，因為婚宴的點每天都在地圖上）；
   // 地圖圓點裡寫號碼，行程那一行的 ▼ 換成同一個號碼，兩邊對得起來
   function number(){
     const num = {};
     let n = 0;
     // 同一行裡新出現的點共用一個號碼（例如「鼓山輪渡站或棧貳庫輪渡站」二選一，都算第 2 站）
     steps.filter(x=>!x.closest('[hidden]')).forEach(x=>{
-      const fresh = ids(x).filter(id=>{ const s = spot(id); return s && (s.kind==='sight'||s.kind==='food') && !(id in num); });
+      const fresh = ids(x).filter(id=>{ const s = spot(id); return s && (s.kind==='sight'||s.kind==='food'||s.kind==='venue') && !(id in num); });
       if(fresh.length){ n++; fresh.forEach(id=>num[id] = n); }
     });
     SPOTS.forEach(s=>{

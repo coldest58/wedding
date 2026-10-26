@@ -56,22 +56,22 @@
 svg.sc-far{display:block;height:auto}
 /* 捲動中暫停圖裡的飄動（js/hero-far.js 加 class），手機捲動才不會抖 */
 svg.sc-far.hf-scrolling *{animation-play-state:paused!important}
-/* 手機（直式）：wedding 字樣整組放大、上移；兩側大雲放大並往中間靠，再依螢幕調：左雲往左 14% 螢幕寬、順時針轉 10 度；右雲往下 5% 螢幕高、逆時針轉 5 度。
+/* 手機（直式）：wedding 字樣整組放大、上移；兩側大雲放大並往中間靠，再依螢幕調：左雲往左 14% 螢幕寬、順時針轉 10 度；右雲往下 5% 螢幕高，之後兩側雲再一起往上 2%（右雲淨往下 3%）、逆時針轉 5 度。
    右雲以底角為中心轉會讓右上角被切平的邊往內跑、在窄手機露出來，所以多加 (58, -3) 的位移（角度改了要重算），等於改以右上角為中心轉（--upx 由 js/hero-far.js 算，把螢幕 px 換成畫布單位）。
    數值是遠山畫布（1920×1920）的座標單位；字樣以自己的中心放大，雲以貼著畫布邊的底角為中心放大。
-   雲往內移的量受最窄的手機（320～360 寬）限制：再多，雲被畫布切平的外側邊會在飄動時露出來（右雲本身會往左飄 52） */
+   雲往內移的量受最窄的手機（320～360 寬）限制：再多，雲被畫布切平的外側邊會露出來（當初右雲還會往左飄 52，現在改成上下浮，右雲其實還有一點空間可以再往內） */
 @media (max-aspect-ratio:4/5){
   .sc-far .hf-word{transform-box:view-box;transform-origin:968px 464px;scale:1.18;translate:20px -300px}
-  .sc-far .hf-c1{transform-box:view-box;transform-origin:-30px 790px;scale:1.45;rotate:10deg;translate:calc(240px - 14vw * var(--upx,3)) 0}
-  .sc-far .hf-c3{transform-box:view-box;transform-origin:1965px 840px;scale:1.45;rotate:-5deg;translate:calc(-170px + 58px) calc(5svh * var(--upx,3) - 3px)}
+  .sc-far .hf-c1{transform-box:view-box;transform-origin:-30px 790px;scale:1.45;rotate:10deg;translate:calc(240px - 14vw * var(--upx,3)) calc(-2svh * var(--upx,3))}
+  .sc-far .hf-c3{transform-box:view-box;transform-origin:1965px 840px;scale:1.45;rotate:-5deg;translate:calc(-170px + 58px) calc(3svh * var(--upx,3) - 3px)}
   /* 中間兩朵（山稜後）手機版不顯示 */
   .sc-far .hf-c2,.sc-far .hf-c4{display:none}
 }
 /* 2:3～4:5（大手機、平板直放）遠山圖幾乎貼齊螢幕寬，雲往內移會露出被畫布切平的外側邊：左雲只移一點；
-   右雲本身會往左飄 52，反而要先往外推，飄到最左時右緣才不會露出來 */
+   右雲往外推 60 是當初它還會往左飄 52 時留的；現在改成上下浮，這個量偏保守 */
 @media (min-aspect-ratio:2/3) and (max-aspect-ratio:4/5){
-  .sc-far .hf-c1{translate:calc(30px - 14vw * var(--upx,3)) 0}
-  .sc-far .hf-c3{translate:calc(60px + 58px) calc(5svh * var(--upx,3) - 3px)}
+  .sc-far .hf-c1{translate:calc(30px - 14vw * var(--upx,3)) calc(-2svh * var(--upx,3))}
+  .sc-far .hf-c3{translate:calc(60px + 58px) calc(3svh * var(--upx,3) - 3px)}
 }
 .fp svg{display:block;width:100%;height:auto}
 

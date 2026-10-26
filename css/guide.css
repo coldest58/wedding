@@ -65,6 +65,8 @@
 .g-num{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid var(--ink);border-radius:50%;font-size:11px;font-weight:var(--fw-bold);line-height:1;color:var(--ink);vertical-align:-2px}
 .g-num-sight{background:#6FB58A}
 .g-num-food{background:var(--sun)}
+.g-num-venue{background:var(--rose);color:#fff}
+.g-map .g-dot-venue.has-num{color:#fff}
 .g-dot-sight{background:#6FB58A}
 .g-dot-food{background:var(--sun)}
 /* 車站：白底圓點，外框是路線色 */
