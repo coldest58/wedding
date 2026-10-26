@@ -116,6 +116,11 @@ html.hero-off .hero,html.hero-off .hero *{animation-play-state:paused!important}
 .layer svg.hero-near{display:block;height:auto}
 /* 右邊灌木（後層）捲得比左邊慢一點點（data-f -.11 vs -.14）；首屏捲完（約 640 * --u）時會落後 .03*640 ≈ 19u，先往上挪回來，捲到底時兩層對齊原圖 */
 .layer.near-back{margin-top:calc(var(--u) * -19)}
+/* 電腦版（橫的畫面）：前景灌木和底下的綠色整片再往上 5.5svh */
+@media (min-aspect-ratio:4/5){
+  .layer .hero-near{top:calc(72.5svh - var(--sw) * .502)}
+  .layer .hero-near-fill{top:calc(72.5svh + var(--sw) * .498 - 2px)}
+}
 /* 直立畫面（手機、平板直放）灌木圖兩側會被裁掉，花都在畫面外：左邊灌木往右挪、右邊往左挪，讓兩邊的花露出來 */
 @media (max-aspect-ratio:4/5){
   .layer.near:not(.near-back) .hero-near{margin-left:calc(var(--sw) * .1)}

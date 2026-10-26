@@ -22,7 +22,7 @@
 <!-- 樣式：依序載入（後面的會蓋過前面的，motion.css 一定要放最後） -->
 <link rel="stylesheet" href="css/base.css?v=20261024b">
 <link rel="stylesheet" href="css/nav.css?v=20261024b">
-<link rel="stylesheet" href="css/hero.css?v=20261027f">
+<link rel="stylesheet" href="css/hero.css?v=20261027g">
 <link rel="stylesheet" href="css/meadow.css?v=20261024d">
 <link rel="stylesheet" href="css/soil.css?v=20261024b">
 <link rel="stylesheet" href="css/guide.css?v=20261025c">
@@ -47,15 +47,15 @@
   <!-- 天空雲：h-far.svg 裡的雲和 wedding 字樣，由 js/hero-far.js 從遠山圖拆出來放這裡；在山後面、捲動比山慢 -->
   <div class="layer" data-f=".72" data-m="0.15"><div class="frame" id="far-clouds"></div></div>
     <div class="layer" data-f=".66" data-m="0.2"><div class="frame"><img class="fp sc sc-far" src="assets/h-far.svg?v=26" alt=""></div></div>
-  <div class="layer" data-f=".58" data-m="0.4"><div class="frame"><img class="fp sc sc-hills" src="assets/h-hills.svg?v=14" alt=""></div></div>
-  <div class="layer" data-f=".48" data-m="0.6"><div class="frame"><img class="fp sc sc-arch" src="assets/h-arch.svg?v=15" alt=""></div></div>
+  <div class="layer" data-f=".58" data-m="0.4"><div class="frame"><img class="fp sc sc-hills" src="assets/h-hills.svg?v=15" alt=""></div></div>
+  <div class="layer" data-f=".48" data-m="0.6"><div class="frame"><img class="fp sc sc-arch" src="assets/h-arch.svg?v=16" alt=""></div></div>
   <div class="layer" data-f=".42" data-m="0.9"><div class="frame"><div class="fp hero-birds"><img class="bob bird-img" src="assets/art/bird-banner.svg" alt="兩隻鳥叼著 20261213 的布條"></div></div></div>
-  <div class="layer ground" data-f=".42" data-m="0.8"><div class="frame"><img class="fp sc" data-spin src="assets/h-ground.svg?v=16" alt=""><div class="fp hero-ground-fill"></div></div></div>
+  <div class="layer ground" data-f=".42" data-m="0.8"><div class="frame"><img class="fp sc" data-spin src="assets/h-ground.svg?v=17" alt=""><div class="fp hero-ground-fill"></div></div></div>
   <div class="layer" data-f=".42" data-m="1.0"><div class="frame"><img class="fp couple-img" src="assets/art/couple-dance.svg?v=6" alt="穿白紗的貓新娘與穿西裝的狗新郎牽手跳舞"></div></div>
   <!-- 第四層：前景灌木分兩張圖（右 h-near2 稍慢、左 h-near1），視差只差一點點，首屏從視窗下緣露出約 15～20%、看得到花（css/hero.css 的 78svh），往下滑再升上來。
        data-sway：花會搖，游標掃過或手指點一下會晃；在 Illustrator 包成群組的小樹叢各自有一點捲動視差（js/flowers.js） -->
-  <div class="layer near near-back" data-f="-.11" data-m="1.5"><img class="fp hero-near" data-sway src="assets/h-near2.svg?v=3" alt=""></div>
-  <div class="layer near" data-f="-.14" data-m="1.7"><img class="fp hero-near" data-sway src="assets/h-near1.svg?v=3" alt=""><div class="fp hero-near-fill"></div></div>
+  <div class="layer near near-back" data-f="-.11" data-m="1.5"><img class="fp hero-near" data-sway src="assets/h-near2.svg?v=4" alt=""></div>
+  <div class="layer near" data-f="-.14" data-m="1.7"><img class="fp hero-near" data-sway src="assets/h-near1.svg?v=4" alt=""><div class="fp hero-near-fill"></div></div>
   <div class="cue" id="cue" aria-hidden="true">Scroll
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </div>
@@ -335,18 +335,18 @@
           <li class="g-step" data-spot="park"><span class="g-mk" aria-hidden="true">▼</span><div><b>上午在親子遊樂園區放電</b></div></li>
           <li class="g-step" data-spot="park wwy"><span class="g-mk" aria-hidden="true">▼</span><div><b>午餐在園區美食區或衛武營簡單吃</b></div></li>
           <li class="g-step" data-spot="wwy"><span class="g-mk" aria-hidden="true">▼</span><div><b>下午到衛武營都會公園散步、跑草地</b><p>旁邊的衛武營藝文中心有大片屋簷，可以遮陽躲雨</p></div></li>
-          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推介台灣菜），建議先訂位</p></div></li>
+          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推薦台菜），建議先訂位</p></div></li>
           <li class="g-step"><span class="g-mk" aria-hidden="true">●</span><div><b>回高雄當地旅宿</b></div></li>
         </ol>
         </div>
         <div role="tabpanel" id="g-r-pier" aria-labelledby="g-r-pier-tab" hidden>
         <ol class="g-steps">
           <li class="g-step" data-spot="thsr tra-ks"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭高鐵至左營站，或搭台鐵至高雄車站</b><p>兩站都可以直接轉捷運紅線</p></div></li>
-          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至鹽埕埔站附近中午用餐</b><p>美食推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
-          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>買杯奶茶，再去塩埕第一公有市場逛市集</b><p>奶茶推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
-          <li class="g-step" data-spot="pier2"><span class="g-mk" aria-hidden="true">▼</span><div><b>走到駁二藝術特區看裝置藝術</b><p>從鹽埕埔走路約 10 分鐘；小孩可以去哈瑪星台灣鐵道館看火車模型</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至高雄小吃天堂鹽埕埔站吃午餐</b><p><a href="https://www.threads.com/share/D8iuU3nua/" target="_blank">Threads這篇很推</a>。國琳推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>吃飽再去奶茶街買手搖</b><p>國琳推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
+          <li class="g-step" data-spot="pier2"><span class="g-mk" aria-hidden="true">▼</span><div><b>走到駁二藝術特區看裝置藝術、逛市集</b><p>從鹽埕埔走路約 10 分鐘；也可以帶小孩去<a href="https://maps.app.goo.gl/B9QaxxkJAT4cJaKh9" target="_blank">哈瑪星台灣鐵道館</a>搭火車看模型（需門票）</p></div></li>
           <li class="g-step" data-spot="pier2"><span class="g-mk" aria-hidden="true">▼</span><div><b>看大港橋旋轉，到棧貳庫看海休息</b></div></li>
-          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推介台灣菜），建議先訂位</p></div></li>
+          <li class="g-step" data-spot="dream"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭輕軌到夢時代吃晚餐</b><p>推薦 6 樓白玉樓（必比登推薦台菜），建議先訂位</p></div></li>
           <li class="g-step"><span class="g-mk" aria-hidden="true">●</span><div><b>回高雄當地旅宿</b></div></li>
         </ol>
         </div>
@@ -366,8 +366,8 @@
         <h3><img src="assets/flowerYG.svg" alt="">第 1 日</h3>
         <ol class="g-steps">
           <li class="g-step" data-spot="thsr tra-ks"><span class="g-mk" aria-hidden="true">▼</span><div><b>搭高鐵至左營站，或搭台鐵至高雄車站</b><p>兩站都可以直接轉捷運紅線</p></div></li>
-          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至鹽埕埔站附近中午用餐</b><p>美食推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
-          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>買杯奶茶，再去塩埕第一公有市場逛市集</b><p>奶茶推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>轉捷運至鹽埕埔站附近中午用餐</b><p><a href="https://www.threads.com/share/D8iuU3nua/" target="_blank">Threads這篇很推</a>。國琳推薦：阿財雞絲麵、鴨肉珍、塩埕鴨肉意麵</p></div></li>
+          <li class="g-step" data-spot="yancheng"><span class="g-mk" aria-hidden="true">▼</span><div><b>買杯奶茶，再去鹽埕第一公有市場逛市集</b><p>國琳推薦：双妃奶茶、松藝奶茶、天池冬瓜茶</p></div></li>
           <li class="g-step" data-spot="ferry-gs ferry-kw"><span class="g-mk" aria-hidden="true">▼</span><div><b>至鼓山輪渡站或棧貳庫輪渡站，搭渡輪至旗津</b></div></li>
           <li class="g-step" data-spot="cijin"><span class="g-mk" aria-hidden="true">▼</span><div><b>走訪旗後山，賞燈塔、礮臺和海港風景</b></div></li>
           <li class="g-step" data-spot="cijin"><span class="g-mk" aria-hidden="true">▼</span><div><b>旗津廟前路享用晚餐</b></div></li>
@@ -415,7 +415,7 @@
 <script src="js/theme-color.js" defer></script>
 <script src="js/hero.js?v=2" defer></script>
 <script src="js/hero-far.js?v=3" defer></script>
-<script src="js/flowers.js" defer></script>
+<script src="js/flowers.js?v=2" defer></script>
 <script src="js/couple.js" defer></script>
 <script src="js/ground-flowers.js" defer></script>
 <script src="js/bush-frame.js" defer></script>
