@@ -212,6 +212,8 @@
               <label><input type="radio" name="invite" value="不用啦，相關資訊我都清楚"><b>不需要</b></label>
             </div>
           </div>
+          <!-- 選「紙本喜帖」才出現、才必填；js/rsvp.js 的 syncAddr() 切換 -->
+          <label class="fld" id="addrFld" hidden><span>寄送地址</span><input name="address" autocomplete="street-address" placeholder="例如：80441 高雄市鼓山區○○路 1 號 3 樓"></label>
           <label class="fld"><span>給新人的話<small>（選填）</small></span><textarea name="message" rows="4" placeholder="祝福、點歌、想一起拍照⋯⋯都可以"></textarea></label>
           <p class="err" role="alert"></p>
           <div class="nav-row">

@@ -47,6 +47,11 @@
   const cleanPhone = () => { const v = digitsOnly(phone.value); if (v !== phone.value) phone.value = v; };
   phone.addEventListener('input', e => { if (!e.isComposing) cleanPhone(); });
   phone.addEventListener('compositionend', cleanPhone);
+  // 寄送地址：選紙本喜帖才出現、才必填
+  const addrFld = $('#addrFld'), addr = form.elements.address;
+  const paper = () => val('invite') === '需要，請寄紙本喜帖給我';
+  function syncAddr(){ const on = paper(); addrFld.hidden = !on; addr.required = on; if (!on) addr.removeAttribute('aria-invalid'); }
+  form.querySelectorAll('input[name=invite]').forEach(r => r.addEventListener('change', syncAddr));
 
   function validate(n){
     const s = sheets[n - 1], err = s.querySelector('.err');
@@ -84,7 +89,7 @@
     const att = attending();
     return {
       name: val('name'), phone: val('phone'), email: val('email'), relation: val('relation'),
-      attend: val('attend'), invite: val('invite'), message: val('message'),
+      attend: val('attend'), invite: val('invite'), address: paper() ? val('address') : '', message: val('message'),
       guests: att ? steppers.guests.val : 0, chairs: att ? steppers.chairs.val : 0, veg: att ? steppers.veg.val : 0, att
     };
   }
@@ -139,7 +144,7 @@
     } else {
       html += row('出席意願', hl('不克出席') + '，衷心祝福');
     }
-    const inv = { '需要，請寄電子喜帖給我':`電子喜帖（寄至 ${esc(d.email)}）`, '需要，請寄紙本喜帖給我':'紙本喜帖', '不用啦，相關資訊我都清楚':'不需要' }[d.invite];
+    const inv = { '需要，請寄電子喜帖給我':`電子喜帖（寄至 ${esc(d.email)}）`, '需要，請寄紙本喜帖給我':`紙本喜帖（寄至 ${esc(d.address)}）`, '不用啦，相關資訊我都清楚':'不需要' }[d.invite];
     html += row('喜帖寄送', inv) + row('聯絡電話', esc(d.phone));
     if (d.message) html += row('給新人的話', hl(d.message));
     $('#letterBody').innerHTML = html;
@@ -157,7 +162,7 @@
   // ---- 寄出 ----
   async function submit(d, { correction = false } = {}){ // correction：更正上一封，訊息前面加【更正】
     const E = CONFIG.entries || {};
-    const KEYS = ['name', 'phone', 'relation', 'attend', 'invite', 'guests', 'chairs', 'veg', 'message'];
+    const KEYS = ['name', 'phone', 'relation', 'attend', 'invite', 'address', 'guests', 'chairs', 'veg', 'message'];
     if (KEYS.some(k => !E[k] || /\[/.test(E[k]))) { console.warn('[RSVP] CONFIG.entries 還有題目沒設定，資料沒有送出'); return 'demo'; } // 任何一題是佔位文字就不送
     const fd = new FormData();
     const put = (k, v) => { if (k) fd.append(k, v); };
@@ -167,7 +172,7 @@
       else { fd.append(k, '__other_option__'); fd.append(k + '.other_option_response', String(v)); }
     };
     put('emailAddress', d.email);
-    put(E.name, d.name); put(E.phone, d.phone); put(E.relation, d.relation); put(E.attend, d.attend); put(E.invite, d.invite);
+    put(E.name, d.name); put(E.phone, d.phone); put(E.relation, d.relation); put(E.attend, d.attend); put(E.invite, d.invite); put(E.address, d.address);
     choice(E.guests, d.guests, ['1','2','3','4']);
     choice(E.chairs, d.chairs, ['1','2','3','4']);
     choice(E.veg, d.veg, ['0','1','2','3','4']);
@@ -345,7 +350,7 @@
     sendFail.hidden = true; done.hidden = true; busy = false;
   }
   function reset(){
-    form.reset(); steppers.guests.set(1); steppers.chairs.set(0); steppers.veg.set(0); sync();
+    form.reset(); syncAddr(); steppers.guests.set(1); steppers.chairs.set(0); steppers.veg.set(0); sync();
     clearMotion(); stage.hidden = true; form.hidden = false; show(1);
   }
   $('#againBtn').addEventListener('click', () => { endCorrection(); reset(); form.scrollIntoView({ block:'center' }); });
@@ -358,8 +363,8 @@
   const canCorrect = r => !!(r && r.attend); // 舊格式只有 { name, at }，帶不回內容
   function saveLast(d){
     try {
-      const { name, phone, email, relation, attend, invite, guests, chairs, veg, message } = d;
-      localStorage.setItem(KEY, JSON.stringify({ name, phone, email, relation, attend, invite, guests, chairs, veg, message, at:Date.now() }));
+      const { name, phone, email, relation, attend, invite, address, guests, chairs, veg, message } = d;
+      localStorage.setItem(KEY, JSON.stringify({ name, phone, email, relation, attend, invite, address, guests, chairs, veg, message, at:Date.now() }));
       return true;
     } catch(e){ return false; }
   }
@@ -367,8 +372,8 @@
   function restore(r){
     reset();
     const set = (n, v) => { const el = form.elements[n]; if (el instanceof RadioNodeList) [...el].forEach(x => x.checked = x.value === v); else if (el) el.value = v || ''; };
-    ['name', 'phone', 'email', 'relation', 'attend', 'invite', 'message'].forEach(k => set(k, r[k]));
-    cleanPhone();                                       // 舊回函的電話可能有 -，帶回來時一併濾掉
+    ['name', 'phone', 'email', 'relation', 'attend', 'invite', 'address', 'message'].forEach(k => set(k, r[k]));
+    syncAddr(); cleanPhone();                                      // 舊回函的電話可能有 -，帶回來時一併濾掉
     steppers.guests.set(r.guests || 1); sync();          // 先設人數，座椅與素食的上限才會對
     steppers.chairs.set(r.chairs || 0); steppers.veg.set(r.veg || 0); sync();
     correcting = true; correctNote.hidden = false;
