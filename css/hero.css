@@ -28,6 +28,12 @@
     html.hero-off .hero .layer{animation-play-state:running!important}
   }
 }
+/* 觸控裝置（手機）省記憶體：每層都會變成一張獨立的 GPU 圖，大小是「層裡所有東西的外框」× 螢幕倍率²。
+   場景圖比螢幕寬三倍多、地面和灌木底下的綠色又往下延伸上千 px，iPhone（3 倍）上十幾層加起來約 700MB，Safari 會整頁當掉重載（「重複發生問題」）。
+   每層裁到看得到的範圍就好：左右＝螢幕寬（觸控沒有滑鼠跟隨，不會左右位移）；高度＝首屏高再多 20%（前景灌木往上捲，會露出層裡比首屏更下面的部分，最多約 14%） */
+@media (hover:none){
+  .hero .layer{overflow:hidden;height:calc((100svh + 640 * var(--u)) * 1.2)}
+}
 /* 場景四層：共用 1920² 畫布；寬 --sw，拱門中心(畫布 51.4%)對齊 frame 中線，地平線(畫布 43.23%)落在 fh 62% */
 .hero{--sw:max(calc(var(--fw) * 1.2), calc(100vw + 100px))}  /* 滑鼠視差最多讓場景圖左右各位移約 21px（data-m 最大 1.7）；前景灌木圖本身又偏左 14px，所以多留 50px */
 .layer .sc{left:calc(50% - var(--sw) * var(--cx,.514));top:calc(var(--fh) * .62 - var(--sw) * .4323);width:var(--sw)}
@@ -92,6 +98,8 @@ html.hero-off .hero,html.hero-off .hero *{animation-play-state:paused!important}
 .layer .bgc{display:none}
 /* 暫時隱藏標題圖 title.svg。要恢復就刪掉這行 */
 .layer .hero-title{display:none}
+/* 上面兩個暫時隱藏的東西，所在的整層也一起藏：層本身有 will-change，空的也會佔一張 GPU 圖。要恢復時這行也刪掉 */
+.hero .layer:has(> .bgc, .hero-title){display:none}
 /* wedding 字樣：像雲一樣緩慢上下（帶一點左右）飄；用獨立的 translate 屬性，不蓋掉原本的 translateX(-50%) 置中 */
 .title-float{animation:titleDrift 7s ease-in-out infinite alternate}
 @keyframes titleDrift{from{translate:calc(var(--fh) * -.004) calc(var(--fh) * -.009)}to{translate:calc(var(--fh) * .004) calc(var(--fh) * .009)}}
